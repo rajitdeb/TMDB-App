@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:tmdb/style/theme.dart';
+import 'package:tmdb/widgets/genre_widget.dart';
 import 'package:tmdb/widgets/now_playing_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -32,7 +33,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: ListView(
         children: [
-          NowPlaying()
+          NowPlaying(),
+          GenreWidget()
         ],
       ),
     );
