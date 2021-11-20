@@ -34,13 +34,13 @@ dependencies:
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
-  dio: ^2.1.13
-  bloc: ^3.0.0
-  rxdart: ^0.23.1
-  eva_icons_flutter: ^2.0.0
-  flutter_rating_bar: ^3.0.1+1
-  page_indicator: ^0.2.0
-  font_awesome_flutter: ^8.4.0
+  dio: ^4.0.3
+  bloc: ^8.0.1
+  rxdart: ^0.27.2
+  eva_icons_flutter: ^3.0.2
+  flutter_rating_bar: ^4.0.0
+  page_indicator: ^0.4.1
+  font_awesome_flutter: ^9.2.0
 
 dev_dependencies:
   flutter_test:

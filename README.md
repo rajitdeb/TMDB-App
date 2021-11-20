@@ -1,6 +1,6 @@
-# tmdb
+# TMDB APP
 
-An app that shows information about a movie
+An app that shows information about a movie.
 
 ## Packages
 
