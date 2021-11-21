@@ -14,7 +14,7 @@ class MovieRepository {
   var discoverMovie = "${Constants.baseUrl}/discover/movie";
   var getNowPlaying = "${Constants.baseUrl}/movie/now_playing";
   var getAllGenres = "${Constants.baseUrl}/genre/movie/list";
-  var getAllTrendingPersonality = "${Constants.baseUrl}/trending/people/week";
+  var getAllTrendingPersonality = "${Constants.baseUrl}/trending/person/week";
 
   // functions
   Future<MovieResponse> getPopularMovies() async {

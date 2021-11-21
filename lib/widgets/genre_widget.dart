@@ -41,7 +41,7 @@ class _GenreWidgetState extends State<GenreWidget> {
   Widget _buildErrorWidget(String? error) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
+      height: 270.0,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -52,19 +52,23 @@ class _GenreWidgetState extends State<GenreWidget> {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          SizedBox(
-            width: 25.0,
-            height: 25.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              strokeWidth: 4.0,
-            ),
-          )
-        ],
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: 270.0,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            SizedBox(
+              width: 25.0,
+              height: 25.0,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 4.0,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

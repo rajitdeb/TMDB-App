@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/widgets/genre_widget.dart';
 import 'package:tmdb/widgets/now_playing_widget.dart';
+import 'package:tmdb/widgets/person_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -32,9 +33,10 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: ListView(
-        children: [
+        children: const [
           NowPlaying(),
-          GenreWidget()
+          GenreWidget(),
+          PersonList()
         ],
       ),
     );

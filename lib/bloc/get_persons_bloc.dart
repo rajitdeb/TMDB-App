@@ -7,7 +7,7 @@ class PersonsListBloc {
   final BehaviorSubject<PersonResponse> _subject =
   BehaviorSubject<PersonResponse>();
 
-  getAllGenres() async {
+  getAllTrendingPerson() async {
     PersonResponse response = await _repository.getTrendingPeople();
     _subject.sink.add(response);
   }

@@ -41,7 +41,7 @@ class _GenreTabsState extends State<GenreTabs> with SingleTickerProviderStateMix
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 307.0,
+      height: 270.0,
       child: DefaultTabController(
         length: genres.length,
         child: Scaffold(

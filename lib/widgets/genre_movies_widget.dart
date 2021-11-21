@@ -108,33 +108,34 @@ class _GenreMoviesState extends State<GenreMovies> {
       );
     } else {
       return Container(
-          height: 270.0,
+          height: 100.0,
           padding: const EdgeInsets.only(left: 10.0),
           child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: movies.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                       top: 10.0,
                       bottom: 10.0,
                       right: 10.0
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       movies[index].poster == null
                           ? Container(
                         width: 120.0,
                         height: 150.0,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                             color: MyColors.secondColor,
                             borderRadius: BorderRadius.all(
                                 Radius.circular(2.0)),
                             shape: BoxShape.rectangle
                         ),
                         child: Column(
-                          children: [
+                          children: const [
                             Icon(EvaIcons.filmOutline, color: Colors.white,
                               size: 50.0,)
                           ],
@@ -144,7 +145,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                         width: 120.0,
                         height: 150.0,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(
+                          borderRadius: const BorderRadius.all(
                               Radius.circular(2.0)
                           ),
                           shape: BoxShape.rectangle,
