@@ -10,6 +10,7 @@ class MovieRepository {
 
   // endpoints
   var getAllPopularMovies = "${Constants.baseUrl}/movie/popular";
+  var getTopRatedRMovies = "${Constants.baseUrl}/discover/movie";
   var getMovieDetail = "${Constants.baseUrl}/movie/";
   var discoverMovie = "${Constants.baseUrl}/discover/movie";
   var getNowPlaying = "${Constants.baseUrl}/movie/now_playing";
@@ -17,6 +18,50 @@ class MovieRepository {
   var getAllTrendingPersonality = "${Constants.baseUrl}/trending/person/week";
 
   // functions
+  Future<MovieResponse> getTopRatedMoviesInIndia() async {
+    var params = {
+      "api_key": Constants.apiKey,
+      "language": "en-US",
+      "certification_country": "IN",
+      "certification": "U",
+      "sort_by": "vote_average.desc",
+      "include_adult": "false",
+      "page": 1
+    };
+
+    try {
+      Response response =
+      await _dio.get(getTopRatedRMovies, queryParameters: params);
+      // print(response.data.toString());
+      return MovieResponse.fromJson(response.data);
+    } catch (e) {
+      print(e);
+      return MovieResponse.withError(e.toString());
+    }
+  }
+
+  Future<MovieResponse> getTopRatedMoviesInUs() async {
+    var params = {
+      "api_key": Constants.apiKey,
+      "language": "en-US",
+      "certification_country": "US",
+      "certification": "R",
+      "sort_by": "vote_average.desc",
+      "include_adult": "false",
+      "page": 1
+    };
+
+    try {
+      Response response =
+      await _dio.get(getTopRatedRMovies, queryParameters: params);
+      // print(response.data.toString());
+      return MovieResponse.fromJson(response.data);
+    } catch (e) {
+      print(e);
+      return MovieResponse.withError(e.toString());
+    }
+  }
+
   Future<MovieResponse> getPopularMovies() async {
     var params = {
       "api_key": Constants.apiKey,

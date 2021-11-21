@@ -3,7 +3,7 @@ class Movie {
   final int id;
   final num popularity;
   final String title;
-  final String backPoster;
+  final String? backPoster;
   final String? poster;
   final String overview;
   final num rating;
