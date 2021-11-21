@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tmdb/bloc/get_movies_by_genre_bloc.dart';
 import 'package:tmdb/model/genre.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/widgets/genre_movies_widget.dart';
@@ -24,6 +25,11 @@ class _GenreTabsState extends State<GenreTabs> with SingleTickerProviderStateMix
   void initState() {
     super.initState();
     _tabController = TabController(vsync: this, length: genres.length);
+    _tabController.addListener(() {
+      if(_tabController.indexIsChanging){
+        moviesByGenreBloc.drainStream();
+      }
+    });
   }
 
   @override
