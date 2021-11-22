@@ -1,9 +1,11 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:tmdb/bloc/top_rated_movies_bloc.dart';
 import 'package:tmdb/model/movie.dart';
 import 'package:tmdb/model/movie_response.dart';
+import 'package:tmdb/screens/detail_screen.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/utils/constants.dart';
 
@@ -127,94 +129,99 @@ class _TopRatedMoviesInUSState extends State<TopRatedMoviesInUS> {
               scrollDirection: Axis.horizontal,
               itemCount: movies.length,
               itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.only(
-                      top: 10.0,
-                      bottom: 10.0,
-                      right: 10.0
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      movies[index]!.poster == null
-                          ? Container(
-                        width: 120.0,
-                        height: 150.0,
-                        decoration: const BoxDecoration(
-                            color: MyColors.secondColor,
-                            borderRadius: BorderRadius.all(
-                                Radius.circular(2.0)),
-                            shape: BoxShape.rectangle
+                return GestureDetector(
+                  onTap: () {
+                    Get.to(MovieDetailsScreen(), arguments: movies[index]);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(
+                        top: 10.0,
+                        bottom: 10.0,
+                        right: 10.0
+                    ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        movies[index]!.poster == null
+                            ? Container(
+                          width: 120.0,
+                          height: 150.0,
+                          decoration: const BoxDecoration(
+                              color: MyColors.secondColor,
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(2.0)),
+                              shape: BoxShape.rectangle
+                          ),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: const [
+                              Icon(EvaIcons.filmOutline, color: Colors.white,
+                                size: 50.0,)
+                            ],
+                          ),
+                        )
+                            : Container(
+                          width: 120.0,
+                          height: 150.0,
+                          decoration: BoxDecoration(
+                            borderRadius: const BorderRadius.all(
+                                Radius.circular(2.0)
+                            ),
+                            shape: BoxShape.rectangle,
+                            image: DecorationImage(
+                                image: NetworkImage("${Constants
+                                    .baseImageUrl_w200}${movies[index]!.poster}"),
+                                fit: BoxFit.cover
+                            ),
+                          ),
                         ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const [
-                            Icon(EvaIcons.filmOutline, color: Colors.white,
-                              size: 50.0,)
+
+                        SizedBox(
+                            height: 10.0
+                        ),
+
+                        Container(
+                          width: 100.0,
+                          child: Text(
+                            movies[index]!.title,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            style: const TextStyle(
+                                height: 1.4,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14.0
+                            ),
+                          ),
+                        ),
+
+                        const SizedBox(height: 5.0),
+
+                        Row(
+                          children: [
+                            RatingBar.builder(
+                                itemSize: 14.0,
+                                initialRating: movies[index]!.rating / 2,
+                                minRating: 1,
+                                direction: Axis.horizontal,
+                                allowHalfRating: true,
+                                itemCount: 5,
+                                itemPadding: const EdgeInsets.symmetric(
+                                    horizontal: 2.0),
+                                itemBuilder: (context, _) =>
+                                const Icon(
+                                    EvaIcons.star,
+                                    color: MyColors.secondColor
+                                ),
+                                onRatingUpdate: (rating) {
+                                  print(rating);
+                                }
+                            )
                           ],
-                        ),
-                      )
-                          : Container(
-                        width: 120.0,
-                        height: 150.0,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                              Radius.circular(2.0)
-                          ),
-                          shape: BoxShape.rectangle,
-                          image: DecorationImage(
-                              image: NetworkImage("${Constants
-                                  .baseImageUrl_w200}${movies[index]!.poster}"),
-                              fit: BoxFit.cover
-                          ),
-                        ),
-                      ),
-
-                      SizedBox(
-                          height: 10.0
-                      ),
-
-                      Container(
-                        width: 100.0,
-                        child: Text(
-                          movies[index]!.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: const TextStyle(
-                              height: 1.4,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 14.0
-                          ),
-                        ),
-                      ),
-
-                      const SizedBox(height: 5.0),
-
-                      Row(
-                        children: [
-                          RatingBar.builder(
-                              itemSize: 14.0,
-                              initialRating: movies[index]!.rating / 2,
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding: const EdgeInsets.symmetric(
-                                  horizontal: 2.0),
-                              itemBuilder: (context, _) =>
-                              const Icon(
-                                  EvaIcons.star,
-                                  color: MyColors.secondColor
-                              ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              }
-                          )
-                        ],
-                      )
-                    ],
+                        )
+                      ],
+                    ),
                   ),
                 );
               }

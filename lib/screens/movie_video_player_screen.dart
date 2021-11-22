@@ -1,39 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb/style/theme.dart';
+import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieVideoPlayer extends StatefulWidget {
 
-  final YoutubePlayerController controller;
-
-  const MovieVideoPlayer({Key? key, required this.controller}) : super(key: key);
+  const MovieVideoPlayer({Key? key}) : super(key: key);
 
   @override
-  _MovieVideoPlayerState createState() => _MovieVideoPlayerState(controller);
+  _MovieVideoPlayerState createState() => _MovieVideoPlayerState();
 }
 
 class _MovieVideoPlayerState extends State<MovieVideoPlayer> {
 
-  final YoutubePlayerController controller;
+  final String videoId = Get.arguments;
 
-  _MovieVideoPlayerState(this.controller);
+  late YoutubePlayerController _controller;
 
   @override
   void initState() {
     super.initState();
+    _controller = YoutubePlayerController(
+      initialVideoId: videoId,
+      flags: const YoutubePlayerFlags(
+        hideControls: false,
+        autoPlay: true,
+        forceHD: true,
+      ),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.toggleFullScreenMode();
+    _controller.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        color: MyColors.mainColor,
+        color: Colors.black,
+        padding: const EdgeInsets.all(16.0),
         child: Center(
           child: YoutubePlayer(
-            controller: controller,
+            controller: _controller,
             showVideoProgressIndicator: true,
             progressIndicatorColor: Colors.amber,
-            progressColors: ProgressBarColors(
+            progressColors: const ProgressBarColors(
               playedColor: Colors.amber,
               handleColor: Colors.amberAccent,
             ),
@@ -42,4 +57,5 @@ class _MovieVideoPlayerState extends State<MovieVideoPlayer> {
       ),
     );
   }
+
 }

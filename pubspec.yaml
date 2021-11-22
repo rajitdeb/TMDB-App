@@ -41,8 +41,9 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   page_indicator: ^0.4.1
   font_awesome_flutter: ^9.2.0
-  sliver_fab: ^1.0.0
   youtube_player_flutter: ^8.0.0
+  sliver_header_delegate: ^0.0.1
+  get: ^4.3.8
 
 
 dev_dependencies:

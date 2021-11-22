@@ -1,12 +1,11 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:tmdb/bloc/get_movie_videos_bloc.dart';
-import 'package:tmdb/model/movie_response.dart';
 import 'package:tmdb/model/movie_video.dart';
 import 'package:tmdb/model/movie_video_response.dart';
+import 'package:tmdb/screens/movie_video_player_screen.dart';
 import 'package:tmdb/style/theme.dart';
-import 'package:tmdb/utils/constants.dart';
 
 class MoreVideosOfCurrentMovie extends StatefulWidget {
 
@@ -41,7 +40,7 @@ class _MoreVideosOfCurrentMovieState extends State<MoreVideosOfCurrentMovie> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
+        const Padding(
           padding: EdgeInsets.only(left: 10.0, top: 20.0),
           child: Text(
             "VIDEOS FROM THIS MOVIE",
@@ -53,7 +52,7 @@ class _MoreVideosOfCurrentMovieState extends State<MoreVideosOfCurrentMovie> {
           ),
         ),
 
-        SizedBox(height: 5.0,),
+        const SizedBox(height: 5.0,),
 
         StreamBuilder<MovieVideoResponse>(
           stream: movieVideosBloc.subject.stream,
@@ -75,7 +74,7 @@ class _MoreVideosOfCurrentMovieState extends State<MoreVideosOfCurrentMovie> {
   }
 
   Widget _buildErrorWidget(String? error) {
-    return Container(
+    return SizedBox(
       width: MediaQuery
           .of(context)
           .size
@@ -114,7 +113,7 @@ class _MoreVideosOfCurrentMovieState extends State<MoreVideosOfCurrentMovie> {
   Widget _buildMoreMovieVideosWidget(MovieVideoResponse? data) {
     List<MovieVideo>? videos = data?.movieVideos;
     if(videos == null || videos.isEmpty){
-      return Container(
+      return SizedBox(
         width: MediaQuery
             .of(context)
             .size
@@ -137,16 +136,17 @@ class _MoreVideosOfCurrentMovieState extends State<MoreVideosOfCurrentMovie> {
     } else {
       return Container(
         height: 210.0,
-        padding: EdgeInsets.only(left: 10.0),
+        padding: const EdgeInsets.only(left: 10.0),
         child: ListView.builder(
             scrollDirection: Axis.horizontal,
             itemCount: videos.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 15.0),
+                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 15.0),
                 child: GestureDetector(
                     onTap: () {
                       print("Item Cliked! Name: ${videos[index].name}");
+                      Get.to(MovieVideoPlayer(), arguments: videos[index].key);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -156,29 +156,29 @@ class _MoreVideosOfCurrentMovieState extends State<MoreVideosOfCurrentMovie> {
                           child: Container(
                             width: 250.0,
                             height: 150.0,
-                            decoration: BoxDecoration(
+                            decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.all(
                                   Radius.circular(2.0),),
                                 shape: BoxShape.rectangle,
                               color: Colors.black
                             ),
-                            child: Center(
+                            child: const Center(
                               child: Icon(EvaIcons.playCircle, color: Colors.white, size: 40.0,),
                             ),
                           ),
                         ),
 
-                        SizedBox(height: 10.0,),
+                        const SizedBox(height: 10.0,),
 
                         Container(
                           width: 250.0,
                           height: 20.0,
-                          padding: EdgeInsets.only(left: 10.0),
+                          padding: const EdgeInsets.only(left: 10.0),
                           child: Text(
                             videos[index].name,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
+                            style: const TextStyle(
                                 height: 1.4,
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold,

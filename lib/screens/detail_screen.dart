@@ -1,41 +1,35 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:sliver_fab/sliver_fab.dart';
-import 'package:tmdb/bloc/get_movie_details_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:tmdb/bloc/get_movie_videos_bloc.dart';
 import 'package:tmdb/model/movie.dart';
 import 'package:tmdb/model/movie_video.dart';
 import 'package:tmdb/model/movie_video_response.dart';
-import 'package:tmdb/screens/movie_video_player_screen.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/utils/constants.dart';
 import 'package:tmdb/widgets/casts_widget.dart';
 import 'package:tmdb/widgets/more_video_of_current_movie.dart';
 import 'package:tmdb/widgets/movie_info.dart';
 import 'package:tmdb/widgets/similar_movies_widget.dart';
-import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
 
-  final Movie movie;
-
-  const MovieDetailsScreen({Key? key, required this.movie}) : super(key: key);
+  const MovieDetailsScreen({Key? key}) : super(key: key);
 
   @override
-  _MovieDetailsScreenState createState() => _MovieDetailsScreenState(movie);
+  _MovieDetailsScreenState createState() => _MovieDetailsScreenState();
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
-  final Movie movie;
-
-  _MovieDetailsScreenState(this.movie);
+  final Movie movie = Get.arguments as Movie;
 
   @override
   void initState() {
     super.initState();
-    getMovieDetailsBloc.getMovieDetails(movie.id);
     movieVideosBloc.getMovieVideos(movie.id);
   }
 
@@ -47,181 +41,50 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    final Movie movie = Get.arguments as Movie;
+
     return Scaffold(
       backgroundColor: MyColors.mainColor,
-      body: Builder(builder: (BuildContext context) {
-        return SliverFab(
-          floatingPosition: const FloatingPosition(right: 20.0),
-          floatingWidget: StreamBuilder<MovieVideoResponse>(
-            stream: movieVideosBloc.subject.stream,
-            builder: (BuildContext context, AsyncSnapshot<MovieVideoResponse> snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.data!.error != null && snapshot.data!.error!.isEmpty) {
-                  return _buildErrorWidget(snapshot.data!.error);
+      body: Builder(
+        builder: (BuildContext context) {
+          return StreamBuilder(
+              stream: movieVideosBloc.subject.stream,
+              builder: (context, AsyncSnapshot<MovieVideoResponse> snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data!.error != null &&
+                      snapshot.data!.error!.isEmpty) {
+                    return _buildErrorWidget(snapshot.data!.error);
+                  }
+                  return _buildMovieVideosWidget(snapshot.data, movie);
+                } else if (snapshot.hasError) {
+                  return _buildErrorWidget(snapshot.error.toString());
+                } else {
+                  return _buildLoadingWidget();
                 }
-                return _buildMovieVideosWidget(snapshot.data);
-              } else if (snapshot.hasError) {
-                return _buildErrorWidget(snapshot.error.toString());
-              } else {
-                return _buildLoadingWidget();
-              }
-          },),
-          expandedHeight: 200.0,
-          slivers: [
-            SliverAppBar(
-              backgroundColor: MyColors.mainColor,
-              expandedHeight: 200.0,
-              pinned: true,
-              flexibleSpace: FlexibleSpaceBar(
-                title: Text(
-                    movie.title.length > 40
-                    ? movie.title.substring(0, 20) + "..."
-                    : movie.title,
-                style: TextStyle(
-                  fontSize: 12.0,
-                  fontWeight: FontWeight.bold
-                ),
-                ),
-
-                background: Stack(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        shape: BoxShape.rectangle,
-                        image: DecorationImage(
-                          image: NetworkImage(
-                            "${Constants.baseImageUrl}${movie.backPoster}",
-                          ),
-                            fit: BoxFit.cover
-                        )
-                      ),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.5)
-                        ),
-                      ),
-                    ),
-
-                    Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.bottomCenter,
-                          end: Alignment.topCenter,
-                          colors: [
-                            Colors.black.withOpacity(0.9),
-                            Colors.black.withOpacity(0.0)
-                          ]
-                        )
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            ),
-            SliverPadding(
-              padding: EdgeInsets.all(0.0),
-              sliver: SliverList(
-                delegate: SliverChildListDelegate(
-                  [
-                    Padding(
-                      padding: EdgeInsets.only(left: 10.0, top: 20.0),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            (movie.rating / 2).toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-
-                          SizedBox(
-                            width: 5.0,
-                          ),
-
-                          RatingBar.builder(
-                              itemSize: 14.0,
-                              initialRating: (movie.rating / 2).toDouble(),
-                              minRating: 1,
-                              direction: Axis.horizontal,
-                              allowHalfRating: true,
-                              itemCount: 5,
-                              itemPadding: const EdgeInsets.symmetric(
-                                  horizontal: 2.0),
-                              itemBuilder: (context, _) =>
-                              const Icon(
-                                  EvaIcons.star,
-                                  color: MyColors.secondColor
-                              ),
-                              onRatingUpdate: (rating) {
-                                print(rating);
-                              }
-                          )
-                        ],
-                      ),
-                    ),
-                    Padding(
-                        padding: EdgeInsets.only(left: 10.0, top: 20.0),
-                      child: Text(
-                        "OVERVIEW",
-                        style: TextStyle(
-                          color: MyColors.titleColor,
-                          fontWeight: FontWeight.w500,
-                          fontSize: 12.0
-                        )
-                      ),
-                    ),
-
-                    SizedBox(height: 5.0),
-
-                    Padding(
-                      padding: EdgeInsets.all(10.0),
-                      child: Text(
-                        movie.overview,
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 12.0,
-                          height: 1.5
-                        ),
-                      ),
-                    ),
-
-                    SizedBox(height: 10.0),
-
-                    MovieInfoWidget(id: movie.id,),
-
-                    CastsWidget(id: movie.id,),
-
-                    MoreVideosOfCurrentMovie(id: movie.id),
-
-                    SimilarMoviesWidget(id: movie.id),
-
-                  ]
-                ),
-              ),
-            )
-          ],
-        );
-      },),
+              });
+        },
+      ),
     );
   }
 
   Widget _buildErrorWidget(String? error) {
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: [Text("Error occurred: $error")],
+          children: const [
+            Text(
+                "An Error Occurred. Please try again later",
+              style: TextStyle(
+                color: MyColors.titleColor,
+                fontWeight: FontWeight.bold,
+                fontSize: 14.0,
+              ),
+            )
+          ],
         ),
       ),
     );
@@ -245,14 +108,12 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     );
   }
 
-  Widget _buildMovieVideosWidget(MovieVideoResponse? data) {
+  Widget _buildMovieVideosWidget(MovieVideoResponse? data, Movie movie) {
     List<MovieVideo>? movieVideos = data?.movieVideos;
+
     if (movieVideos == null || movieVideos.isEmpty) {
-      return Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+      return SizedBox(
+        width: MediaQuery.of(context).size.width,
         height: 250.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -270,27 +131,101 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         ),
       );
     } else {
-      return FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => MovieVideoPlayer(
-                controller: YoutubePlayerController(
-                  initialVideoId: movieVideos[0].key,
-                  flags: YoutubePlayerFlags(
-                    autoPlay: true,
-                    mute: false,
+      return NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              expandedHeight: 250.0,
+              floating: false,
+              pinned: true,
+              backgroundColor: MyColors.mainColor,
+              flexibleSpace: FlexibleSpaceBar(
+                centerTitle: true,
+                title: Text(
+                    movie.title.length > 20
+                        ? movie.title.substring(0, 20) + "..."
+                        : movie.title
+                ),
+                background: movie.backPoster == null
+                ? Container(
+                  decoration: const BoxDecoration(
+                    shape: BoxShape.rectangle,
+                    color: Colors.black
                   ),
+                  child: const Icon(
+                    Icons.image_not_supported,
+                    size: 48.0,
+                    color: Colors.white,
+                  ),
+                )
+                : Image.network(
+                  "${Constants.baseImageUrl}${movie.backPoster}",
+                  fit: BoxFit.cover,
                 ),
               ),
-            ),
-          );
+            )
+          ];
         },
-        backgroundColor: MyColors.secondColor,
-        child: const Icon(Icons.play_arrow, color: Colors.white,),
+        body: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 10.0, top: 20.0),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "${(movie.rating / 2).toDouble()}",
+                      style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 14.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    const SizedBox(width: 5.0,),
+                    RatingBar.builder(
+                        itemSize: 14.0,
+                        initialRating: (movie.rating / 2).toDouble(),
+                        minRating: 1,
+                        direction: Axis.horizontal,
+                        allowHalfRating: true,
+                        itemCount: 5,
+                        itemPadding: const EdgeInsets.symmetric(horizontal: 2.0),
+                        itemBuilder: (context, _) => const Icon(EvaIcons.star,
+                            color: MyColors.secondColor),
+                        onRatingUpdate: (rating) {
+                          print(rating);
+                        })
+                  ],
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(left: 10.0, top: 20.0),
+                child: Text("OVERVIEW",
+                    style: TextStyle(
+                        color: MyColors.titleColor,
+                        fontWeight: FontWeight.w500,
+                        fontSize: 12.0)),
+              ),
+              const SizedBox(height: 5.0),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  movie.overview,
+                  style:
+                  const TextStyle(color: Colors.white, fontSize: 12.0, height: 1.5),
+                ),
+              ),
+              const SizedBox(height: 10.0),
+              MovieInfoWidget(id: movie.id,),
+              CastsWidget(id: movie.id,),
+              MoreVideosOfCurrentMovie(id: movie.id),
+              SimilarMoviesWidget(id: movie.id),
+            ],
+          ),
+        ),
       );
     }
   }
-
 }

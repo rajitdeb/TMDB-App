@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:tmdb/bloc/get_movies_by_genre_bloc.dart';
 import 'package:tmdb/model/movie.dart';
 import 'package:tmdb/model/movie_response.dart';
@@ -123,10 +124,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Navigator.push(context, MaterialPageRoute(
-                          builder: (BuildContext context) =>
-                              MovieDetailsScreen(movie: movies[index])
-                      ));
+                      Get.to(MovieDetailsScreen(), arguments: movies[index]);
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -191,7 +189,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                             RatingBar.builder(
                                 itemSize: 14.0,
                                 initialRating: movies[index].rating / 2,
-                                minRating: 1,
+                                minRating: 0,
                                 direction: Axis.horizontal,
                                 allowHalfRating: true,
                                 itemCount: 5,
