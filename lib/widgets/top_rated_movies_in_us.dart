@@ -103,9 +103,9 @@ class _TopRatedMoviesInUSState extends State<TopRatedMoviesInUS> {
     List<Movie?>? movies = data?.movies;
     if(movies == null && movies!.isEmpty){
       print("MovieResponse is null or empty");
-      return Container(
+      return SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: 100.0,
+        height: 220.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -114,7 +114,7 @@ class _TopRatedMoviesInUSState extends State<TopRatedMoviesInUS> {
               children: const [
                 Text(
                   "No trending movies to display",
-                  style: TextStyle(color: Colors.black45),
+                  style: TextStyle(color: MyColors.titleColor),
                 )
               ],
             )
@@ -131,7 +131,8 @@ class _TopRatedMoviesInUSState extends State<TopRatedMoviesInUS> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    Get.to(MovieDetailsScreen(), arguments: movies[index]);
+                    print("Top Rated US Movie: ${movies[index]!.title}");
+                    Get.to(() => const MovieDetailsScreen(), arguments: movies[index]!);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(

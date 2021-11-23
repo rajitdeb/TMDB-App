@@ -7,5 +7,6 @@ class Constants {
   static const String baseImageUrl_w300 = "https://image.tmdb.org/t/p/w300/";
 
   static const String youtubeBaseUrl = "https://www.youtube.com/watch?v=";
+  static const String userAvatarBaseUrl = "https://secure.gravatar.com/avatar/";
 
 }

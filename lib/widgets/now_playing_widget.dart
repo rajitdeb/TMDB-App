@@ -6,6 +6,7 @@ import 'package:tmdb/model/movie.dart';
 import 'package:tmdb/model/movie_response.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/utils/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NowPlaying extends StatefulWidget {
   const NowPlaying({Key? key}) : super(key: key);
@@ -44,19 +45,23 @@ class _NowPlayingState extends State<NowPlaying> {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          SizedBox(
-            width: 25.0,
-            height: 25.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              strokeWidth: 4.0,
-            ),
-          )
-        ],
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 220.0,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            SizedBox(
+              width: 25.0,
+              height: 25.0,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 4.0,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -64,7 +69,7 @@ class _NowPlayingState extends State<NowPlaying> {
   Widget _buildNowPlayingWidget(MovieResponse? data) {
     List<Movie>? movies = data?.movies.cast<Movie>();
     if (movies == null || movies.isEmpty) {
-      return Container(
+      return SizedBox(
         width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -82,7 +87,7 @@ class _NowPlayingState extends State<NowPlaying> {
         ),
       );
     } else {
-      return Container(
+      return SizedBox(
         height: 220.0,
         child: PageIndicatorContainer(
           align: IndicatorAlign.bottom,
@@ -101,18 +106,15 @@ class _NowPlayingState extends State<NowPlaying> {
                   onTap: () {},
                   child: Stack(
                     children: [
-                      Hero(
-                        tag: movies[index].id,
-                        child: Container(
-                          width: MediaQuery.of(context).size.width,
-                          height: 220.0,
-                          decoration: BoxDecoration(
-                              shape: BoxShape.rectangle,
-                              image: DecorationImage(
-                                  fit: BoxFit.cover,
-                                  image: NetworkImage(
-                                      "${Constants.baseImageUrl}${movies[index].backPoster}"))),
-                        ),
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 220.0,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            image: DecorationImage(
+                                fit: BoxFit.cover,
+                                image: NetworkImage(
+                                    "${Constants.baseImageUrl}${movies[index].backPoster}"))),
                       ),
                       const SizedBox(height: 10.0),
                       Container(
@@ -128,18 +130,6 @@ class _NowPlayingState extends State<NowPlaying> {
                               MyColors.mainColor.withOpacity(1.0),
                               MyColors.mainColor.withOpacity(0.0)
                             ])),
-                      ),
-
-                      const Positioned(
-                        bottom: 0.0,
-                        top: 0.0,
-                        left: 0.0,
-                        right: 0.0,
-                        child: Icon(
-                          FontAwesomeIcons.playCircle,
-                          color: MyColors.secondColor,
-                          size: 40.0,
-                        ),
                       ),
 
                       Positioned(
@@ -179,5 +169,10 @@ class _NowPlayingState extends State<NowPlaying> {
         children: [Text("Error occurred: $error")],
       ),
     );
+  }
+
+  void _launchURL(String _url) async {
+    String completeUrl = "${Constants.youtubeBaseUrl}$_url";
+    if (!await launch(completeUrl)) throw 'Could not launch $completeUrl';
   }
 }

@@ -1,34 +1,34 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tmdb/bloc/get_cast_from_movie_bloc.dart';
-import 'package:tmdb/model/cast.dart';
-import 'package:tmdb/model/cast_response.dart';
+import 'package:tmdb/bloc/get_crew_from_movie_bloc.dart';
+import 'package:tmdb/model/crew.dart';
+import 'package:tmdb/model/crew_response.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/utils/constants.dart';
 
-class CastsWidget extends StatefulWidget {
+class CrewWidget extends StatefulWidget {
   final int id;
 
-  const CastsWidget({Key? key, required this.id}) : super(key: key);
+  const CrewWidget({Key? key, required this.id}) : super(key: key);
 
   @override
-  _CastsWidgetState createState() => _CastsWidgetState(id);
+  _CrewWidgetState createState() => _CrewWidgetState(id);
 }
 
-class _CastsWidgetState extends State<CastsWidget> {
+class _CrewWidgetState extends State<CrewWidget> {
   final int id;
 
-  _CastsWidgetState(this.id);
+  _CrewWidgetState(this.id);
 
   @override
   void initState() {
     super.initState();
-    castFromMovieBloc.getCastsFromMovie(id);
+    crewFromMovieBloc.getCrewFromMovie(id);
   }
 
   @override
   void dispose() {
-    castFromMovieBloc.drainStream();
+    crewFromMovieBloc.drainStream();
     super.dispose();
   }
 
@@ -40,7 +40,7 @@ class _CastsWidgetState extends State<CastsWidget> {
         const Padding(
           padding: EdgeInsets.only(left: 10.0, top: 20.0),
           child: Text(
-            "CASTS",
+            "CREW",
             style: TextStyle(
                 color: MyColors.titleColor,
                 fontWeight: FontWeight.w500,
@@ -50,15 +50,15 @@ class _CastsWidgetState extends State<CastsWidget> {
         const SizedBox(
           height: 5.0,
         ),
-        StreamBuilder<CastResponse>(
-          stream: castFromMovieBloc.subject.stream,
-          builder: (context, AsyncSnapshot<CastResponse> snapshot) {
+        StreamBuilder<CrewResponse>(
+          stream: crewFromMovieBloc.subject.stream,
+          builder: (context, AsyncSnapshot<CrewResponse> snapshot) {
             if (snapshot.hasData) {
               if (snapshot.data!.error != null &&
                   snapshot.data!.error!.isEmpty) {
                 return _buildErrorWidget(snapshot.data!.error);
               }
-              return _buildCastsFromMovieWidget(snapshot.data);
+              return _buildCrewFromMovieWidget(snapshot.data);
             } else if (snapshot.hasError) {
               return _buildErrorWidget(snapshot.error.toString());
             } else {
@@ -79,7 +79,7 @@ class _CastsWidgetState extends State<CastsWidget> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
             Text(
-              "An error occurred. Please try again later.",
+              "An Error occurred. Please try again later.",
               style: TextStyle(color: MyColors.titleColor),
             )
           ],
@@ -89,31 +89,27 @@ class _CastsWidgetState extends State<CastsWidget> {
   }
 
   Widget _buildLoadingWidget() {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
-      height: 170.0,
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
-            SizedBox(
-              width: 25.0,
-              height: 25.0,
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                strokeWidth: 4.0,
-              ),
-            )
-          ],
-        ),
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: const [
+          SizedBox(
+            width: 25.0,
+            height: 25.0,
+            child: CircularProgressIndicator(
+              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+              strokeWidth: 4.0,
+            ),
+          )
+        ],
       ),
     );
   }
 
-  Widget _buildCastsFromMovieWidget(CastResponse? data) {
-    List<Cast>? casts = data?.casts;
+  Widget _buildCrewFromMovieWidget(CrewResponse? data) {
+    List<Crew>? crewMembers = data?.crewMembers;
 
-    return casts == null || casts.isEmpty
+    return crewMembers == null || crewMembers.isEmpty
         ? SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 100.0,
@@ -133,13 +129,14 @@ class _CastsWidgetState extends State<CastsWidget> {
                   )
                 ],
               ),
-            ))
+            ),
+          )
         : SizedBox(
             width: MediaQuery.of(context).size.width,
             height: 170.0,
             child: ListView.builder(
                 scrollDirection: Axis.horizontal,
-                itemCount: casts.length,
+                itemCount: crewMembers.length,
                 itemBuilder: (context, index) {
                   return Container(
                     padding: const EdgeInsets.only(top: 10.0, left: 10.0),
@@ -149,9 +146,9 @@ class _CastsWidgetState extends State<CastsWidget> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          casts[index].img == null
+                          crewMembers[index].img == null
                               ? Hero(
-                                  tag: casts[index].id,
+                                  tag: crewMembers[index].id,
                                   child: Container(
                                     width: 70.0,
                                     height: 70.0,
@@ -165,7 +162,7 @@ class _CastsWidgetState extends State<CastsWidget> {
                                   ),
                                 )
                               : Hero(
-                                  tag: casts[index].id,
+                                  tag: crewMembers[index].id,
                                   child: Container(
                                     width: 70.0,
                                     height: 70.0,
@@ -174,14 +171,14 @@ class _CastsWidgetState extends State<CastsWidget> {
                                         image: DecorationImage(
                                             fit: BoxFit.cover,
                                             image: NetworkImage(
-                                                "${Constants.baseImageUrl_w300}${casts[index].img}"))),
+                                                "${Constants.baseImageUrl_w300}${crewMembers[index].img}"))),
                                   ),
                                 ),
                           const SizedBox(
                             height: 4.0,
                           ),
                           Text(
-                            casts[index].name,
+                            crewMembers[index].name,
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
@@ -196,9 +193,9 @@ class _CastsWidgetState extends State<CastsWidget> {
                             height: 4.0,
                           ),
                           Text(
-                            casts[index].character == null
+                            crewMembers[index].knownFor == null
                                 ? "Unknown"
-                                : casts[index].character.toString(),
+                                : crewMembers[index].knownFor.toString(),
                             maxLines: 2,
                             textAlign: TextAlign.center,
                             style: const TextStyle(

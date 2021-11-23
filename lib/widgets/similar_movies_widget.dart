@@ -93,19 +93,23 @@ class _SimilarMoviesWidgetState extends State<SimilarMoviesWidget> {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          SizedBox(
-            width: 25.0,
-            height: 25.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              strokeWidth: 4.0,
-            ),
-          )
-        ],
+    return SizedBox(
+      width: MediaQuery.of(context).size.width,
+      height: 220.0,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: const [
+            SizedBox(
+              width: 25.0,
+              height: 25.0,
+              child: CircularProgressIndicator(
+                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                strokeWidth: 4.0,
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -118,6 +122,7 @@ class _SimilarMoviesWidgetState extends State<SimilarMoviesWidget> {
             .of(context)
             .size
             .width,
+        height: 100.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -126,7 +131,7 @@ class _SimilarMoviesWidgetState extends State<SimilarMoviesWidget> {
               children: const [
                 Text(
                   "No movies found for recommendation.",
-                  style: TextStyle(color: Colors.black45),
+                  style: TextStyle(color: MyColors.titleColor),
                 )
               ],
             )
@@ -136,13 +141,13 @@ class _SimilarMoviesWidgetState extends State<SimilarMoviesWidget> {
     }else {
       return Container(
         height: 270.0,
-        padding: EdgeInsets.only(left: 10.0),
+        padding: const EdgeInsets.only(left: 10.0),
         child: ListView.builder(
           scrollDirection: Axis.horizontal,
             itemCount: movies.length,
             itemBuilder: (context, index) {
               return Padding(
-                padding: EdgeInsets.only(top: 10.0, bottom: 10.0, right: 15.0),
+                padding: const EdgeInsets.only(top: 10.0, bottom: 10.0, right: 15.0),
                 child: GestureDetector(
                   onTap: () {},
                   child: Column(
@@ -154,7 +159,7 @@ class _SimilarMoviesWidgetState extends State<SimilarMoviesWidget> {
                           width: 120.0,
                           height: 180.0,
                           decoration: BoxDecoration(
-                            borderRadius: BorderRadius.all(
+                            borderRadius: const BorderRadius.all(
                               Radius.circular(2.0),),
                             shape: BoxShape.rectangle,
                             image: DecorationImage(

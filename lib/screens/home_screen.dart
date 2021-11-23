@@ -22,15 +22,13 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         backgroundColor: MyColors.mainColor,
         centerTitle: true,
-        leading: IconButton(
-          icon: const Icon(EvaIcons.menu2Outline, color: Colors.white),
-          onPressed: () {  },
-        ),
         title: const Text("TMDB"),
-        actions: const [
+        actions: [
           IconButton(
-              onPressed: null,
-              icon: Icon(EvaIcons.searchOutline, color: Colors.white)
+              onPressed: () {
+                /*TODO(Implement Search View in the appBar)*/
+              },
+              icon: const Icon(EvaIcons.searchOutline, color: Colors.white)
           )
         ],
       ),

@@ -136,7 +136,7 @@ class _TopRatedMoviesInIndiaState extends State<TopRatedMoviesInIndia> {
                     //         MovieDetailsScreen()
                     // ));
 
-                    Get.to(MovieDetailsScreen(), arguments: movies[index]);
+                    Get.to(() => const MovieDetailsScreen(), arguments: movies[index]);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(

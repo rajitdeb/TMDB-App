@@ -210,12 +210,13 @@ class _MovieInfoWidgetState extends State<MovieInfoWidget> {
 
                 SizedBox(height: 10.0,),
 
-                Container(
+                movieDetail.genres.isNotEmpty
+                ? Container(
                   height: 38.0,
-                    padding: EdgeInsets.only(right: 10.0, top: 10.0),
+                  padding: const EdgeInsets.only(right: 10.0, top: 10.0),
                   child: ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    itemCount: movieDetail.genres.length,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: movieDetail.genres.length,
                       itemBuilder: (context, index) {
                         return Padding(
                           padding: EdgeInsets.only(right: 10.0),
@@ -229,15 +230,28 @@ class _MovieInfoWidgetState extends State<MovieInfoWidget> {
                               movieDetail.genres[index].name,
                               maxLines: 2,
                               style: TextStyle(
-                                height: 1.4,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 12.0
+                                  height: 1.4,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 12.0
                               ),
                             ),
                           ),
                         );
                       }
+                  ),
+                )
+                    : Container(
+                  width: MediaQuery.of(context).size.width,
+                  height: 100.0,
+                  child: Center(
+                    child: Text(
+                      "No genres found for this movie",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: MyColors.titleColor
+                      ),
+                    ),
                   ),
                 )
               ],

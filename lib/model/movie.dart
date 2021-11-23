@@ -27,3 +27,10 @@ class Movie {
         rating = json["vote_average"];
 
 }
+
+final String tableFavouriteMovies = 'favouriteMovies';
+
+class FavouriteMoviesFields {
+  static final String id = '_id';
+  static final String title = 'title';
+}

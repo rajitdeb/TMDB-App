@@ -1,10 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:tmdb/model/cast_response.dart';
+import 'package:tmdb/model/crew.dart';
+import 'package:tmdb/model/crew_response.dart';
 import 'package:tmdb/model/genreresponse.dart';
 import 'package:tmdb/model/movie_detail_response.dart';
 import 'package:tmdb/model/movie_response.dart';
 import 'package:tmdb/model/movie_video_response.dart';
 import 'package:tmdb/model/personresponse.dart';
+import 'package:tmdb/model/review_response.dart';
 import 'package:tmdb/utils/Constants.dart';
 
 class MovieRepository {
@@ -66,7 +69,7 @@ class MovieRepository {
       "api_key": Constants.apiKey,
       "language": "en-US",
       "certification_country": "US",
-      "certification": "R",
+      "certification": "PG-13",
       "sort_by": "vote_average.desc",
       "include_adult": "false",
       "page": 1
@@ -198,6 +201,24 @@ class MovieRepository {
     }
   }
 
+  Future<CrewResponse> getCrewFromMovie(int id) async {
+    var params = {
+      "api_key": Constants.apiKey,
+      "language": "en-US",
+      "page": 1,
+    };
+
+    try {
+      Response response =
+      await _dio.get("$getMovieDetail/$id/credits", queryParameters: params);
+
+      return CrewResponse.fromJson(response.data);
+    } catch (e) {
+      print(e);
+      return CrewResponse.withError(e.toString());
+    }
+  }
+
   Future<MovieResponse> getSimilarMovies(int id) async {
     var params = {
       "api_key": Constants.apiKey,
@@ -229,6 +250,24 @@ class MovieRepository {
     } catch (e) {
       print(e);
       return MovieVideoResponse.withError(e.toString());
+    }
+  }
+
+  Future<MovieReviewResponse> getReviewsFromMovie(int id) async {
+    var params = {
+      "api_key": Constants.apiKey,
+      "language": "en-US",
+      "page": 1,
+    };
+
+    try {
+      Response response =
+      await _dio.get("$getMovieDetail/$id/reviews", queryParameters: params);
+
+      return MovieReviewResponse.fromJson(response.data);
+    } catch (e) {
+      print(e);
+      return MovieReviewResponse.withError(e.toString());
     }
   }
 

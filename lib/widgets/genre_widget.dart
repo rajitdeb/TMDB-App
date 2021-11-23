@@ -39,7 +39,7 @@ class _GenreWidgetState extends State<GenreWidget> {
   }
 
   Widget _buildErrorWidget(String? error) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 270.0,
       child: Center(
@@ -52,7 +52,7 @@ class _GenreWidgetState extends State<GenreWidget> {
   }
 
   Widget _buildLoadingWidget() {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: 270.0,
       child: Center(
@@ -74,27 +74,20 @@ class _GenreWidgetState extends State<GenreWidget> {
   }
 
   Widget _buildGenreWidget(GenreResponse? data) {
-    List<Genre> genres = data!.genres;
+    List<Genre>? genres = data?.genres;
 
-    if(genres.isNotEmpty) {
+    if(genres != null || genres!.isNotEmpty) {
+      print(genres[0].name);
       return GenreTabs(genres: genres);
     } else {
-      return Container(
+      return SizedBox(
         width: MediaQuery.of(context).size.width,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Column(
-              children: const [
-                Text(
-                  "No genres to display",
-                  style: TextStyle(color: Colors.black45),
-                )
-              ],
-            )
-          ],
-        ),
+        height: 100.0,
+        child: Text(
+          "No genres to display",
+          textAlign: TextAlign.center,
+          style: TextStyle(color: Colors.black45),
+        )
       );
     }
   }

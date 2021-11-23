@@ -7,4 +7,7 @@ class MyColors {
   static const Color secondColor = Color(0xFFF4C10F);
   static const Color titleColor = Color(0xFF5A606B);
 
+  static const Color cardColor = Color(0xFF1A283B);
+  // 0xFF#081C22
+
 }

@@ -124,7 +124,7 @@ class _GenreMoviesState extends State<GenreMovies> {
                   ),
                   child: GestureDetector(
                     onTap: () {
-                      Get.to(MovieDetailsScreen(), arguments: movies[index]);
+                      Get.to(() => const MovieDetailsScreen(), arguments: movies[index]);
                     },
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,

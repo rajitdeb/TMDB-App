@@ -93,6 +93,7 @@ class _PersonListState extends State<PersonList> {
     if (persons == null || persons.isEmpty) {
       return Container(
         width: MediaQuery.of(context).size.width,
+        height: 100.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -174,8 +175,8 @@ class _PersonListState extends State<PersonList> {
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
-                          color: MyColors.titleColor,
-                          fontWeight: FontWeight.w400,
+                          color: MyColors.secondColor,
+                          fontWeight: FontWeight.bold,
                           fontSize: 11.0
                       ),
                     ),
