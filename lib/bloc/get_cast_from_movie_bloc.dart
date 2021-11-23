@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:tmdb/model/cast_response.dart';
 import 'package:tmdb/repository/repository.dart';

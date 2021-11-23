@@ -1,11 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:tmdb/model/cast_response.dart';
-import 'package:tmdb/model/crew.dart';
 import 'package:tmdb/model/crew_response.dart';
 import 'package:tmdb/model/genreresponse.dart';
 import 'package:tmdb/model/movie_detail_response.dart';
 import 'package:tmdb/model/movie_response.dart';
 import 'package:tmdb/model/movie_video_response.dart';
+import 'package:tmdb/model/person_detail.dart';
+import 'package:tmdb/model/person_detail_response.dart';
 import 'package:tmdb/model/personresponse.dart';
 import 'package:tmdb/model/review_response.dart';
 import 'package:tmdb/utils/Constants.dart';
@@ -22,6 +23,7 @@ class MovieRepository {
   var getNowPlaying = "${Constants.baseUrl}/movie/now_playing";
   var getAllGenres = "${Constants.baseUrl}/genre/movie/list";
   var getAllTrendingPersonality = "${Constants.baseUrl}/trending/person/week";
+  var getPersonDetails = "${Constants.baseUrl}/person";
 
   // functions
 
@@ -268,6 +270,23 @@ class MovieRepository {
     } catch (e) {
       print(e);
       return MovieReviewResponse.withError(e.toString());
+    }
+  }
+
+  Future<PersonDetailResponse> getPersonAllDetails(int id) async {
+    var params = {
+      "api_key": Constants.apiKey,
+      "language": "en-US"
+    };
+
+    try {
+      Response response =
+      await _dio.get("$getPersonDetails/$id", queryParameters: params);
+
+      return PersonDetailResponse.fromJson(response.data);
+    } catch (e) {
+      print(e);
+      return PersonDetailResponse.withError(e.toString());
     }
   }
 

@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:get/get.dart';
 import 'package:tmdb/bloc/get_persons_bloc.dart';
 import 'package:tmdb/model/person.dart';
 import 'package:tmdb/model/personresponse.dart';
+import 'package:tmdb/screens/person_details_screen.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/utils/constants.dart';
 
@@ -117,70 +119,76 @@ class _PersonListState extends State<PersonList> {
             itemCount: persons.length,
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return Container(
-                width: 100.0,
-                padding: const EdgeInsets.only(
-                  top: 10.0,
-                  left: 10.0,
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    persons[index].profileImg == null
-                        ? Container(
-                            width: 70.0,
-                            height: 70.0,
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: MyColors.secondColor,
-                            ),
-                            child: const Icon(
-                              FontAwesomeIcons.userAlt,
-                              color: Colors.white,
-                            ),
-                          )
-                        : Container(
-                            width: 70.0,
-                            height: 70.0,
-                            decoration: BoxDecoration(
+              return GestureDetector(
+                onTap: () {
+                  print("Person Id: ${persons[index].id}");
+                  Get.to(() => const PersonDetailsScreen(), arguments: persons[index].id);
+                },
+                child: Container(
+                  width: 100.0,
+                  padding: const EdgeInsets.only(
+                    top: 10.0,
+                    left: 10.0,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      persons[index].profileImg == null
+                          ? Container(
+                              width: 70.0,
+                              height: 70.0,
+                              decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
                                 color: MyColors.secondColor,
-                                image: DecorationImage(
-                                    image: NetworkImage("${Constants.baseImageUrl_w200}${persons[index].profileImg}"),
-                                    fit: BoxFit.cover
-                                )
+                              ),
+                              child: const Icon(
+                                FontAwesomeIcons.userAlt,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Container(
+                              width: 70.0,
+                              height: 70.0,
+                              decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: MyColors.secondColor,
+                                  image: DecorationImage(
+                                      image: NetworkImage("${Constants.baseImageUrl_w200}${persons[index].profileImg}"),
+                                      fit: BoxFit.cover
+                                  )
+                              ),
                             ),
-                          ),
 
-                    const SizedBox(height: 10.0),
+                      const SizedBox(height: 10.0),
 
-                    Text(
-                        persons[index].name,
-                      textAlign: TextAlign.center,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        height: 1.4,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 13.0
-                      ),
-                    ),
-
-                    const SizedBox(height: 4.0),
-
-                    Text(
-                      "Trending for ${persons[index].known}",
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                          color: MyColors.secondColor,
+                      Text(
+                          persons[index].name,
+                        textAlign: TextAlign.center,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          height: 1.4,
+                          color: Colors.white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 11.0
+                          fontSize: 13.0
+                        ),
                       ),
-                    ),
-                  ],
+
+                      const SizedBox(height: 4.0),
+
+                      Text(
+                        "Trending for ${persons[index].known}",
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                            color: MyColors.secondColor,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 11.0
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               );
             }),
