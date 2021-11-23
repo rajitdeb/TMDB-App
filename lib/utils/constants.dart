@@ -6,4 +6,6 @@ class Constants {
   static const String baseImageUrl_w200 = "https://image.tmdb.org/t/p/w200/";
   static const String baseImageUrl_w300 = "https://image.tmdb.org/t/p/w300/";
 
+  static const String youtubeBaseUrl = "https://www.youtube.com/watch?v=";
+
 }

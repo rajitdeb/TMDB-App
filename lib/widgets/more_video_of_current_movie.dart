@@ -6,6 +6,8 @@ import 'package:tmdb/model/movie_video.dart';
 import 'package:tmdb/model/movie_video_response.dart';
 import 'package:tmdb/screens/movie_video_player_screen.dart';
 import 'package:tmdb/style/theme.dart';
+import 'package:tmdb/utils/constants.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class MoreVideosOfCurrentMovie extends StatefulWidget {
 
@@ -146,7 +148,8 @@ class _MoreVideosOfCurrentMovieState extends State<MoreVideosOfCurrentMovie> {
                 child: GestureDetector(
                     onTap: () {
                       print("Item Cliked! Name: ${videos[index].name}");
-                      Get.to(MovieVideoPlayer(), arguments: videos[index].key);
+                      // Get.to(MovieVideoPlayer(), arguments: videos[index].key);
+                      _launchURL(videos[index].key);
                     },
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,6 +197,11 @@ class _MoreVideosOfCurrentMovieState extends State<MoreVideosOfCurrentMovie> {
         ),
       );
     }
+  }
+
+  void _launchURL(String _url) async {
+    String completeUrl = "${Constants.youtubeBaseUrl}$_url";
+    if (!await launch(completeUrl)) throw 'Could not launch $completeUrl';
   }
 
 }

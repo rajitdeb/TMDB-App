@@ -27,6 +27,8 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
 
   final Movie movie = Get.arguments as Movie;
 
+  bool isMovieBookmarked = false;
+
   @override
   void initState() {
     super.initState();
@@ -109,6 +111,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 
   Widget _buildMovieVideosWidget(MovieVideoResponse? data, Movie movie) {
+
     List<MovieVideo>? movieVideos = data?.movieVideos;
 
     if (movieVideos == null || movieVideos.isEmpty) {
@@ -139,6 +142,22 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               floating: false,
               pinned: true,
               backgroundColor: MyColors.mainColor,
+              actions: [
+                GestureDetector(
+                  onTap: () {
+                    setState(() { isMovieBookmarked = !isMovieBookmarked; });
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.only(right: 16.0),
+                    child: Icon(
+                        isMovieBookmarked
+                        ? EvaIcons.bookmark
+                        : EvaIcons.bookmarkOutline,
+                        color: Colors.white
+                    ),
+                  ),
+                ),
+              ],
               flexibleSpace: FlexibleSpaceBar(
                 centerTitle: true,
                 title: Text(
