@@ -25,6 +25,8 @@ class MovieRepository {
   var getAllTrendingPersonality = "${Constants.baseUrl}/trending/person/week";
   var getPersonDetails = "${Constants.baseUrl}/person";
 
+  var searchMovie = "${Constants.baseUrl}/search/movie";
+
   // functions
 
   Future<MovieDetailResponse> getMovieDetails(int movieId) async {
@@ -287,6 +289,25 @@ class MovieRepository {
     } catch (e) {
       print(e);
       return PersonDetailResponse.withError(e.toString());
+    }
+  }
+
+  Future<MovieResponse> searchAMovie(String searchQuery) async{
+    var params = {
+      "api_key": Constants.apiKey,
+      "language": "en-US",
+      "query": searchQuery,
+      "include_adult": "false"
+    };
+
+    try {
+      Response response =
+          await _dio.get(searchMovie, queryParameters: params);
+
+      return MovieResponse.fromJson(response.data);
+    } catch (e) {
+      print(e);
+      return MovieResponse.withError(e.toString());
     }
   }
 

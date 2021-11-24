@@ -18,6 +18,7 @@ import 'package:tmdb/widgets/movie_reviews_widget.dart';
 import 'package:tmdb/widgets/similar_movies_widget.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
+
   const MovieDetailsScreen({Key? key}) : super(key: key);
 
   @override

@@ -1,9 +1,11 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:get/get.dart';
 import 'package:tmdb/bloc/get_similar_movies_bloc.dart';
 import 'package:tmdb/model/movie.dart';
 import 'package:tmdb/model/movie_response.dart';
+import 'package:tmdb/screens/detail_screen.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/utils/constants.dart';
 
