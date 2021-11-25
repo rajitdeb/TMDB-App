@@ -8,6 +8,8 @@ import 'package:tmdb/utils/constants.dart';
 
 class SearchMovies extends SearchDelegate<Movie?> {
 
+  SearchMovies() : super(searchFieldStyle: TextStyle(color: Colors.white));
+
   final suggestionsList = [
     "Shershaah",
     "1917",
@@ -17,6 +19,36 @@ class SearchMovies extends SearchDelegate<Movie?> {
     "Avengers",
     "Finch"
   ];
+
+
+  @override
+  ThemeData appBarTheme(BuildContext context) {
+    return ThemeData(
+      appBarTheme: const AppBarTheme(
+        color: MyColors.mainColor, // affects AppBar's background color
+        actionsIconTheme: IconThemeData(
+          color: Colors.white // affects action Icons like (Search, back button) in AppBar
+        ),
+      ),
+      inputDecorationTheme: const InputDecorationTheme(
+        focusedBorder: InputBorder.none, // affects the Underline Border of Search Bar; in Focus
+        border: InputBorder.none  // affects when Search Bar is in searched state
+      ),
+      hintColor: Colors.grey, // affects the initial 'Search' text
+      textTheme: const TextTheme(
+        headline6: TextStyle( // headline 6 affects the query text
+          color: Colors.white,
+          fontSize: 16.0,
+          fontWeight: FontWeight.bold
+        )
+      ),
+      textSelectionTheme: const TextSelectionThemeData(
+          cursorColor: Colors.white,
+          selectionColor: Colors.white,
+          selectionHandleColor: Colors.white
+      ), // affects when the text in Search Bar is selected
+    );
+  }
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -43,19 +75,22 @@ class SearchMovies extends SearchDelegate<Movie?> {
 
     final resultsList = searchMoviesBloc.subject.stream.value.movies;
 
-    return Padding(
-      padding: const EdgeInsets.all(0.0),
-      child: ListView.builder(
-          itemCount: resultsList.length,
-          itemBuilder: (context, index) {
-            return SizedBox(
-              height: 150.0,
-              child: GestureDetector(
-                  onTap: () { close(context, resultsList[index]); },
-                  child: _buildMovieItemRow(context, resultsList[index]!)
-              ),
-            );
-          }
+    return Container(
+      color: MyColors.mainColor,
+      child: Padding(
+        padding: const EdgeInsets.all(0.0),
+        child: ListView.builder(
+            itemCount: resultsList.length,
+            itemBuilder: (context, index) {
+              return SizedBox(
+                height: 150.0,
+                child: GestureDetector(
+                    onTap: () { close(context, resultsList[index]); },
+                    child: _buildMovieItemRow(context, resultsList[index]!)
+                ),
+              );
+            }
+        ),
       ),
     );
   }
@@ -67,19 +102,22 @@ class SearchMovies extends SearchDelegate<Movie?> {
       searchMoviesBloc.searchAMovie(query);
     }
 
-    return Padding(
-      padding: const EdgeInsets.all(0.0),
-      child: ListView.builder(
-          itemCount: suggestionsList.length,
-          itemBuilder: (context, index) {
-            return SizedBox(
-              height: 50.0,
-              child: GestureDetector(
-                  onTap: () { query = suggestionsList[index]; },
+    return Container(
+      color: MyColors.mainColor,
+      child: Padding(
+        padding: const EdgeInsets.all(0.0),
+        child: ListView.builder(
+            itemCount: suggestionsList.length,
+            itemBuilder: (context, index) {
+              return GestureDetector(
+                onTap: () { query = suggestionsList[index]; },
+                child: SizedBox(
+                  height: 50.0,
                   child: _buildSuggestionsItemRow(context, suggestionsList[index])
-              ),
-            );
-          }
+                ),
+              );
+            }
+        ),
       ),
     );
 
@@ -99,9 +137,11 @@ class SearchMovies extends SearchDelegate<Movie?> {
               image: DecorationImage(
                 fit: BoxFit.cover,
                 image: NetworkImage(
-                  "${Constants.baseImageUrl_w200}${movie.poster}",
+                  movie.poster == null
+                  ? "https://www.peoplenet.in/assets/not-found.png"
+                  : "${Constants.baseImageUrl_w200}${movie.poster}",
                 )
-              )
+              ),
             ),
           ),
 
@@ -109,6 +149,7 @@ class SearchMovies extends SearchDelegate<Movie?> {
 
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 movie.title.length > 20
@@ -117,9 +158,9 @@ class SearchMovies extends SearchDelegate<Movie?> {
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
-                  color: MyColors.mainColor,
+                  color: Colors.white,
                   fontWeight: FontWeight.bold,
-                  fontSize: 14.0
+                  fontSize: 19.0
                 ),
               ),
 
@@ -133,7 +174,7 @@ class SearchMovies extends SearchDelegate<Movie?> {
                   overflow: TextOverflow.ellipsis,
                   softWrap: true,
                   style: const TextStyle(
-                      color: MyColors.mainColor,
+                      color: MyColors.titleColor,
                       fontWeight: FontWeight.bold,
                       fontSize: 14.0
                   ),
@@ -154,7 +195,7 @@ class SearchMovies extends SearchDelegate<Movie?> {
                   itemBuilder: (context, _) =>
                   const Icon(
                       EvaIcons.star,
-                      color: Colors.black
+                      color: MyColors.secondColor,
                   ),
                   onRatingUpdate: (rating) {
                     print(rating);
@@ -175,15 +216,15 @@ class SearchMovies extends SearchDelegate<Movie?> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          const Icon(EvaIcons.trendingUp, color: Colors.black,),
+          const Icon(EvaIcons.trendingUp, color: MyColors.secondColor,),
 
           const SizedBox(width: 16.0,),
 
           Text(
             suggestion,
             style: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold ,
+              color: Colors.white,
+              fontWeight: FontWeight.w400 ,
               fontSize: 14.0,
             ),
           ),
