@@ -22,11 +22,10 @@ An app that shows information about a movie.
 -lottie: ^1.2.1
 
 ## Screenshots
-|------|-------|
 |<img src="screenshots/1.jpg" width="400">|<img src="screenshots/2.jpg" width="400">|
 |<img src="screenshots/3_1.jpg" width="400">|<img src="screenshots/3.jpg" width="400">|
 |<img src="screenshots/4.jpg" width="400">|<img src="screenshots/5.jpg" width="400">|
-|<img src="screenshots/6.jpg" width="400">|
+|<img src="screenshots/6.jpg" width="400">||
 
 ## Download
 APK can be found [here][1]
