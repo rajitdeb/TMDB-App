@@ -1,6 +1,7 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:tmdb/bloc/get_movie_videos_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tmdb/bloc/movie_details_screen_bloc/get_movie_videos_bloc.dart';
 import 'package:tmdb/model/movie_video.dart';
 import 'package:tmdb/model/movie_video_response.dart';
 import 'package:tmdb/style/theme.dart';
@@ -150,22 +151,20 @@ class _MoreVideosOfCurrentMovieState extends State<MoreVideosOfCurrentMovie> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Hero(
-                              tag: videos[index].id,
-                              child: Container(
-                                width: 250.0,
-                                height: 150.0,
-                                decoration: const BoxDecoration(
-                                    borderRadius: BorderRadius.all(
-                                      Radius.circular(2.0),
-                                    ),
-                                    shape: BoxShape.rectangle,
-                                    color: Colors.black),
-                                child: const Center(
-                                  child: Icon(
-                                    EvaIcons.playCircle,
-                                    color: Colors.white,
-                                    size: 40.0,
+                            Container(
+                              width: 250.0,
+                              height: 150.0,
+                              decoration: const BoxDecoration(
+                                  borderRadius: BorderRadius.all(
+                                    Radius.circular(2.0),
+                                  ),
+                                  shape: BoxShape.rectangle,
+                                  color: Colors.black),
+                              child: Center(
+                                child: SizedBox(
+                                  height: 120.0,
+                                  child: Lottie.asset(
+                                      "assets/galaxy_play_ffbg.json"
                                   ),
                                 ),
                               ),

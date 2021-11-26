@@ -8,5 +8,6 @@ class Constants {
 
   static const String youtubeBaseUrl = "https://www.youtube.com/watch?v=";
   static const String userAvatarBaseUrl = "https://secure.gravatar.com/avatar/";
+  static const String imageNotFoundPlaceholderUrl = "https://www.peoplenet.in/assets/not-found.png";
 
 }

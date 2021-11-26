@@ -2,25 +2,26 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:tmdb/bloc/top_rated_movies_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tmdb/bloc/homescreen_bloc/top_rated_movies_bloc.dart';
 import 'package:tmdb/model/movie.dart';
 import 'package:tmdb/model/movie_response.dart';
 import 'package:tmdb/screens/detail_screen.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/utils/constants.dart';
 
-class TopRatedMoviesInIndia extends StatefulWidget {
-  const TopRatedMoviesInIndia({Key? key}) : super(key: key);
+class TopRatedMoviesInUS extends StatefulWidget {
+  const TopRatedMoviesInUS({Key? key}) : super(key: key);
 
   @override
-  _TopRatedMoviesInIndiaState createState() => _TopRatedMoviesInIndiaState();
+  _TopRatedMoviesInUSState createState() => _TopRatedMoviesInUSState();
 }
 
-class _TopRatedMoviesInIndiaState extends State<TopRatedMoviesInIndia> {
+class _TopRatedMoviesInUSState extends State<TopRatedMoviesInUS> {
   @override
   void initState() {
     super.initState();
-    topRatedMoviesBloc.getTopRatedMoviesInIndia();
+    topRatedMoviesBloc.getTopRatedRMoviesInUs();
   }
 
   @override
@@ -32,7 +33,7 @@ class _TopRatedMoviesInIndiaState extends State<TopRatedMoviesInIndia> {
           const Padding(
               padding: EdgeInsets.only(left: 10.0, top: 20.0),
               child: Text(
-                "TOP RATED MOVIES IN INDIA",
+                "TOP RATED MOVIES IN US",
                 style: TextStyle(
                     color: MyColors.titleColor,
                     fontWeight: FontWeight.w500,
@@ -42,7 +43,7 @@ class _TopRatedMoviesInIndiaState extends State<TopRatedMoviesInIndia> {
             height: 10.0,
           ),
           StreamBuilder<MovieResponse>(
-            stream: topRatedMoviesBloc.subjectInIndia.stream,
+            stream: topRatedMoviesBloc.subjectInUS.stream,
             builder: (context, AsyncSnapshot<MovieResponse> snapshot) {
               if (snapshot.hasData) {
                 if (snapshot.data!.error != null &&
@@ -64,48 +65,43 @@ class _TopRatedMoviesInIndiaState extends State<TopRatedMoviesInIndia> {
   }
 
 
-    Widget _buildErrorWidget(String? error) {
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [Text("Error occurred: $error")],
-          ),
+  Widget _buildErrorWidget(String? error) {
+    return Container(
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [Text("Error occurred: $error")],
         ),
-      );
-    }
+      ),
+    );
+  }
 
-    Widget _buildLoadingWidget() {
-      return Container(
-        width: MediaQuery.of(context).size.width,
-        height: 270.0,
-        child: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
-              SizedBox(
-                width: 25.0,
-                height: 25.0,
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  strokeWidth: 4.0,
-                ),
-              )
-            ],
-          ),
+  Widget _buildLoadingWidget() {
+    return SizedBox(
+      height: 270.0,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+                height: 70.0,
+                child: Lottie.asset("assets/gradient_circular_loader.json")
+            )
+          ],
         ),
-      );
-    }
+      ),
+    );
+  }
 
   Widget _buildTopRatedMoviesWidget(MovieResponse? data) {
     List<Movie?>? movies = data?.movies;
     if(movies == null && movies!.isEmpty){
       print("MovieResponse is null or empty");
-      return Container(
+      return SizedBox(
         width: MediaQuery.of(context).size.width,
-        height: 100.0,
+        height: 220.0,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -113,8 +109,8 @@ class _TopRatedMoviesInIndiaState extends State<TopRatedMoviesInIndia> {
             Column(
               children: const [
                 Text(
-                  "No trending people to display",
-                  style: TextStyle(color: Colors.black45),
+                  "No trending movies to display",
+                  style: TextStyle(color: MyColors.titleColor),
                 )
               ],
             )
@@ -131,12 +127,8 @@ class _TopRatedMoviesInIndiaState extends State<TopRatedMoviesInIndia> {
               itemBuilder: (context, index) {
                 return GestureDetector(
                   onTap: () {
-                    // Navigator.push(context, MaterialPageRoute(
-                    //     builder: (BuildContext context) =>
-                    //         MovieDetailsScreen()
-                    // ));
-
-                    Get.to(() => const MovieDetailsScreen(), arguments: movies[index]);
+                    print("Top Rated US Movie: ${movies[index]!.title}");
+                    Get.to(() => const MovieDetailsScreen(), arguments: movies[index]!);
                   },
                   child: Padding(
                     padding: const EdgeInsets.only(

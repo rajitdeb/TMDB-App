@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:tmdb/bloc/get_crew_from_movie_bloc.dart';
+import 'package:tmdb/bloc/movie_details_screen_bloc/get_crew_from_movie_bloc.dart';
 import 'package:tmdb/model/crew.dart';
 import 'package:tmdb/model/crew_response.dart';
 import 'package:tmdb/style/theme.dart';

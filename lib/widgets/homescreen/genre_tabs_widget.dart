@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb/bloc/get_movies_by_genre_bloc.dart';
+import 'package:tmdb/bloc/homescreen_bloc/get_movies_by_genre_bloc.dart';
 import 'package:tmdb/model/genre.dart';
 import 'package:tmdb/style/theme.dart';
-import 'package:tmdb/widgets/genre_movies_widget.dart';
+import 'package:tmdb/widgets/homescreen/genre_movies_widget.dart';
 
 class GenreTabs extends StatefulWidget {
 

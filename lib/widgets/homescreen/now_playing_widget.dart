@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:lottie/lottie.dart';
 import 'package:page_indicator/page_indicator.dart';
-import 'package:tmdb/bloc/get_now_playing_movies_bloc.dart';
+import 'package:tmdb/bloc/homescreen_bloc/get_now_playing_movies_bloc.dart';
 import 'package:tmdb/model/movie.dart';
 import 'package:tmdb/model/movie_response.dart';
 import 'package:tmdb/style/theme.dart';
@@ -46,19 +47,14 @@ class _NowPlayingState extends State<NowPlaying> {
 
   Widget _buildLoadingWidget() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
       height: 220.0,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             SizedBox(
-              width: 25.0,
-              height: 25.0,
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                strokeWidth: 4.0,
-              ),
+                height: 70.0,
+                child: Lottie.asset("assets/gradient_circular_loader.json")
             )
           ],
         ),

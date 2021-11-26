@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:tmdb/model/movie.dart';
 import 'package:tmdb/screens/detail_screen.dart';
 import 'package:tmdb/style/theme.dart';
-import 'package:tmdb/widgets/genre_widget.dart';
-import 'package:tmdb/widgets/now_playing_widget.dart';
-import 'package:tmdb/widgets/person_widget.dart';
-import 'package:tmdb/widgets/search_widget.dart';
-import 'package:tmdb/widgets/top_rated_movies_in_india_widget.dart';
-import 'package:tmdb/widgets/top_rated_movies_in_us.dart';
+import 'package:tmdb/widgets/homescreen/genre_widget.dart';
+import 'package:tmdb/widgets/homescreen/now_playing_widget.dart';
+import 'package:tmdb/widgets/homescreen/person_widget.dart';
+import 'package:tmdb/widgets/homescreen/search_widget.dart';
+import 'package:tmdb/widgets/homescreen/top_rated_movies_in_india_widget.dart';
+import 'package:tmdb/widgets/homescreen/top_rated_movies_in_us.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);

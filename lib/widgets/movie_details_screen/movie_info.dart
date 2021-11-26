@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb/bloc/get_movie_details_bloc.dart';
+import 'package:tmdb/bloc/movie_details_screen_bloc/get_movie_details_bloc.dart';
 import 'package:tmdb/model/movie_detail.dart';
 import 'package:tmdb/model/movie_detail_response.dart';
 import 'package:tmdb/style/theme.dart';

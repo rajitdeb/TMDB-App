@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:tmdb/bloc/get_persons_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tmdb/bloc/homescreen_bloc/get_persons_bloc.dart';
 import 'package:tmdb/model/person.dart';
 import 'package:tmdb/model/personresponse.dart';
 import 'package:tmdb/screens/person_details_screen.dart';
@@ -73,19 +74,18 @@ class _PersonListState extends State<PersonList> {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          SizedBox(
-            width: 25.0,
-            height: 25.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              strokeWidth: 4.0,
-            ),
-          )
-        ],
+    return SizedBox(
+      height: 270.0,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+                height: 70.0,
+                child: Lottie.asset("assets/gradient_circular_loader.json")
+            )
+          ],
+        ),
       ),
     );
   }

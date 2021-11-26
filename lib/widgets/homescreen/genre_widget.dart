@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:tmdb/bloc/get_genres_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tmdb/bloc/homescreen_bloc/get_genres_bloc.dart';
 import 'package:tmdb/model/genre.dart';
 import 'package:tmdb/model/genreresponse.dart';
-import 'package:tmdb/widgets/genre_tabs_widget.dart';
+import 'package:tmdb/widgets/homescreen/genre_tabs_widget.dart';
 
 class GenreWidget extends StatefulWidget {
   const GenreWidget({Key? key}) : super(key: key);
@@ -53,19 +54,14 @@ class _GenreWidgetState extends State<GenreWidget> {
 
   Widget _buildLoadingWidget() {
     return SizedBox(
-      width: MediaQuery.of(context).size.width,
       height: 270.0,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             SizedBox(
-              width: 25.0,
-              height: 25.0,
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                strokeWidth: 4.0,
-              ),
+                height: 70.0,
+                child: Lottie.asset("assets/gradient_circular_loader.json")
             )
           ],
         ),

@@ -2,7 +2,8 @@ import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
-import 'package:tmdb/bloc/get_movies_by_genre_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tmdb/bloc/homescreen_bloc/get_movies_by_genre_bloc.dart';
 import 'package:tmdb/model/movie.dart';
 import 'package:tmdb/model/movie_response.dart';
 import 'package:tmdb/screens/detail_screen.dart';
@@ -68,19 +69,18 @@ class _GenreMoviesState extends State<GenreMovies> {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          SizedBox(
-            width: 25.0,
-            height: 25.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              strokeWidth: 4.0,
-            ),
-          )
-        ],
+    return SizedBox(
+      height: 270.0,
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+                height: 70.0,
+                child: Lottie.asset("assets/gradient_circular_loader.json")
+            )
+          ],
+        ),
       ),
     );
   }

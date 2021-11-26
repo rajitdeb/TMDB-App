@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:tmdb/bloc/get_person_details_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tmdb/bloc/person_details_screen_bloc/get_person_details_bloc.dart';
 import 'package:tmdb/model/person_detail.dart';
 import 'package:tmdb/model/person_detail_response.dart';
 import 'package:tmdb/style/theme.dart';
@@ -15,22 +16,25 @@ class PersonDetailsScreen extends StatefulWidget {
 }
 
 class _PersonDetailsScreenState extends State<PersonDetailsScreen> {
-  final personId = Get.arguments;
 
   @override
   void initState() {
+    // TODO: implement initState
     super.initState();
+    final personId = Get.arguments;
+
     getPersonDetailsBloc.getPersonDetails(personId);
   }
 
   @override
-  void dispose() {
+  void deactivate() {
     getPersonDetailsBloc.drainStream();
-    super.dispose();
+    super.deactivate();
   }
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: MyColors.mainColor,
@@ -79,19 +83,17 @@ class _PersonDetailsScreenState extends State<PersonDetailsScreen> {
   }
 
   Widget _buildLoadingWidget() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
-          SizedBox(
-            width: 25.0,
-            height: 25.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              strokeWidth: 4.0,
-            ),
-          )
-        ],
+    return SizedBox(
+      child: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            SizedBox(
+                height: 70.0,
+                child: Lottie.asset("assets/gradient_circular_loader.json")
+            )
+          ],
+        ),
       ),
     );
   }
@@ -329,5 +331,12 @@ class _PersonDetailsScreenState extends State<PersonDetailsScreen> {
 
   String getPersonGender(int id) {
     return id == 1 ? "Female" : "Male";
+  }
+
+  @override
+  void didChangeDependencies() {
+    final personId = Get.arguments;
+
+    getPersonDetailsBloc.getPersonDetails(personId);
   }
 }

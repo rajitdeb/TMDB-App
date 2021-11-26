@@ -4,21 +4,21 @@ import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:tmdb/bloc/get_movie_videos_bloc.dart';
+import 'package:lottie/lottie.dart';
+import 'package:tmdb/bloc/movie_details_screen_bloc/get_movie_videos_bloc.dart';
 import 'package:tmdb/model/movie.dart';
 import 'package:tmdb/model/movie_video.dart';
 import 'package:tmdb/model/movie_video_response.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/utils/constants.dart';
-import 'package:tmdb/widgets/casts_widget.dart';
-import 'package:tmdb/widgets/crew_widget.dart';
-import 'package:tmdb/widgets/more_video_of_current_movie.dart';
-import 'package:tmdb/widgets/movie_info.dart';
-import 'package:tmdb/widgets/movie_reviews_widget.dart';
-import 'package:tmdb/widgets/similar_movies_widget.dart';
+import 'package:tmdb/widgets/homescreen/casts_widget.dart';
+import 'package:tmdb/widgets/homescreen/crew_widget.dart';
+import 'package:tmdb/widgets/movie_details_screen/more_video_of_current_movie.dart';
+import 'package:tmdb/widgets/movie_details_screen/movie_info.dart';
+import 'package:tmdb/widgets/movie_details_screen/movie_reviews_widget.dart';
+import 'package:tmdb/widgets/movie_details_screen/similar_movies_widget.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
-
   const MovieDetailsScreen({Key? key}) : super(key: key);
 
   @override
@@ -31,7 +31,6 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   @override
   void initState() {
     super.initState();
-    print("Fetching title from Args: ${movie.id}");
     movieVideosBloc.getMovieVideos(movie.id);
   }
 
@@ -70,7 +69,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
   }
 
   Widget _buildErrorWidget(String? error) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       child: Center(
@@ -95,14 +94,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const [
+        children: [
           SizedBox(
-            width: 25.0,
-            height: 25.0,
-            child: CircularProgressIndicator(
-              valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-              strokeWidth: 4.0,
-            ),
+            height: 150.0,
+            child: Lottie.asset("assets/loading_paperplane.json")
           )
         ],
       ),
@@ -122,17 +117,16 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               centerTitle: true,
               title: Text(movie.title.length > 20
                   ? movie.title.substring(0, 20) + "..."
-                  : movie.title),
+                  : movie.title,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: movie.backPoster == null
+                      ? MyColors.secondColor
+                      : Colors.white
+                )
+              ),
               background: movie.backPoster == null
-                  ? Container(
-                      decoration: const BoxDecoration(
-                          shape: BoxShape.rectangle, color: Colors.black),
-                      child: const Icon(
-                        Icons.image_not_supported,
-                        size: 48.0,
-                        color: Colors.white,
-                      ),
-                    )
+                  ? SizedBox(child: Lottie.asset("assets/error_desktop_people.json"),)
                   : Image.network(
                       "${Constants.baseImageUrl}${movie.backPoster}",
                       fit: BoxFit.cover,
