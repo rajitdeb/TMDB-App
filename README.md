@@ -40,7 +40,7 @@ Rajit Deb
 [![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/imrajit/)
 [![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/rajit.deb/)
 
-[1]: https://github.com/rajitdeb/TMDB-App/assets/app-debug.apk
+[1]: https://github.com/rajitdeb/TMDB-App/assets/apk/app-release.apk
 [2]: https://www.themoviedb.org/documentation/api
 
 
