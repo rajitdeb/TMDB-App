@@ -2,25 +2,48 @@
 
 An app that shows information about a movie.
 
-## Packages
+![Release Version](https://img.shields.io/badge/release-v1.0.0-blue)
 
-- dio: ^2.1.13
-- bloc: ^3.0.0
-- rxdart: ^0.23.1
-- eva_icons_flutter: ^2.0.0
-- flutter_rating_bar: ^3.0.1+1
-- page_indicator: ^0.2.0
-- font_awesome_flutter: ^8.4.0
+## App Icon
+![App Icon](images/tmdb_icon.png)
 
-## Getting Started
+## Packages used
 
-This project is a starting point for a Flutter application.
+-dio: ^4.0.3
+-bloc: ^8.0.1
+-rxdart: ^0.27.2
+-eva_icons_flutter: ^3.0.2
+-flutter_rating_bar: ^4.0.0
+-page_indicator: ^0.4.1
+-font_awesome_flutter: ^9.2.0
+-sliver_header_delegate: ^0.0.1
+-get: ^4.3.8
+-url_launcher: ^6.0.15
+-lottie: ^1.2.1
 
-A few resources to get you started if this is your first Flutter project:
+## Screenshots
+|------|-------|
+|<img src="screenshots/1.jpg" width="400">|<img src="screenshots/2.jpg" width="400">|
+|<img src="screenshots/3_1.jpg" width="400">|<img src="screenshots/3.jpg" width="400">|
+|<img src="screenshots/4.jpg" width="400">|<img src="screenshots/5.jpg" width="400">|
+|<img src="screenshots/6.jpg" width="400">|
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Download
+APK can be found [here][1]
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## API Details
+The API used in this application is from TMDB. Can be found [here][2]
+
+## Author
+Rajit Deb
+
+## Find me on
+[![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/imrajit/)
+[![Instagram](https://img.shields.io/badge/Instagram-E4405F?style=for-the-badge&logo=instagram&logoColor=white)](https://www.instagram.com/rajit.deb/)
+
+[1]: https://github.com/rajitdeb/TMDB-App/assets/app-debug.apk
+[2]: https://www.themoviedb.org/documentation/api
+
+
+
+
