@@ -5,7 +5,16 @@ An app that shows information about a movie.
 ![Release Version](https://img.shields.io/badge/release-v1.0.0-blue)
 
 ## App Icon
-![App Icon](images/tmdb_icon.png)
+<img src="images/tmdb_icon.png" width="200" height="200" alt="App Icon">
+
+## Screenshots
+| Screenshot 1  | Screenshot 2  | Screenshot 3 |
+| --------------- | --------------- |------------|
+| <img src="screenshots/1.jpg" width="400"> | <img src="screenshots/2.jpg" width="400"> | <img src="screenshots/3_1.jpg" width="400"> |
+| Screenshot 4  | Screenshot 5  | Screenshot 6 |
+| <img src="screenshots/3.jpg" width="400"> | <img src="screenshots/4.jpg" width="400"> | <img src="screenshots/5.jpg" width="400"> |
+| Screenshot 7  |
+| <img src="screenshots/6.jpg" width="400"> |
 
 ## Packages used
 
@@ -23,15 +32,6 @@ An app that shows information about a movie.
 | url_launcher: | ^6.0.15 |
 | lottie: | ^1.2.1 |
 
-## Screenshots
-| Screenshot 1  | Screenshot 2  | Screenshot 3 |
-| --------------- | --------------- |------------|
-| <img src="screenshots/1.jpg" width="400"> | <img src="screenshots/2.jpg" width="400"> | <img src="screenshots/3_1.jpg" width="400"> |
-| Screenshot 4  | Screenshot 5  | Screenshot 6 |
-| <img src="screenshots/3.jpg" width="400"> | <img src="screenshots/4.jpg" width="400"> | <img src="screenshots/5.jpg" width="400"> |
-| Screenshot 7  |
-| <img src="screenshots/6.jpg" width="400"> |
-
 ## How to get started with the repo ?
 1. Clone the repo. <br >
 2. Then go to [this][2] link and register for an API Key. <br >
@@ -45,7 +45,7 @@ APK can be found [here][1]
 The API used in this application is from TMDB. Can be found [here][2]
 
 ## Author
-Rajit Deb
+<b>Rajit Deb</b>
 
 ## Find me on
 [![LinkedIn Profile](https://img.shields.io/badge/LinkedIn-0077B5?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/imrajit/)
