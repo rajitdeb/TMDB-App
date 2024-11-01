@@ -29,6 +29,7 @@ class SearchMovies extends SearchDelegate<Movie?> {
             color: Colors
                 .white // affects action Icons like (Search, back button) in AppBar
             ),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       inputDecorationTheme: const InputDecorationTheme(
           focusedBorder: InputBorder.none,
