@@ -1,13 +1,10 @@
 import 'package:eva_icons_flutter/eva_icons_flutter.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 import 'package:tmdb/bloc/movie_details_screen_bloc/get_movie_videos_bloc.dart';
 import 'package:tmdb/model/movie.dart';
-import 'package:tmdb/model/movie_video.dart';
 import 'package:tmdb/model/movie_video_response.dart';
 import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/utils/constants.dart';
@@ -19,10 +16,10 @@ import 'package:tmdb/widgets/movie_details_screen/movie_reviews_widget.dart';
 import 'package:tmdb/widgets/movie_details_screen/similar_movies_widget.dart';
 
 class MovieDetailsScreen extends StatefulWidget {
-  const MovieDetailsScreen({Key? key}) : super(key: key);
+  const MovieDetailsScreen({super.key});
 
   @override
-  _MovieDetailsScreenState createState() => _MovieDetailsScreenState();
+  State<MovieDetailsScreen> createState() => _MovieDetailsScreenState();
 }
 
 class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
@@ -72,10 +69,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
     return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
-      child: Center(
+      child: const Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Text(
               "An Error Occurred. Please try again later",
               style: TextStyle(
@@ -97,7 +94,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
         children: [
           SizedBox(
             height: 150.0,
-            child: Lottie.asset("assets/loading_paperplane.json")
+            child: Lottie.asset("assets/loading_paperplane.json"),
           )
         ],
       ),
@@ -115,18 +112,21 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             backgroundColor: MyColors.mainColor,
             flexibleSpace: FlexibleSpaceBar(
               centerTitle: true,
-              title: Text(movie.title.length > 20
-                  ? movie.title.substring(0, 20) + "..."
-                  : movie.title,
+              title: Text(
+                movie.title.length > 27
+                    ? "${movie.title.substring(0, 20)}..."
+                    : movie.title,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: movie.backPoster == null
                       ? MyColors.secondColor
-                      : Colors.white
-                )
+                      : Colors.white,
+                ),
               ),
               background: movie.backPoster == null
-                  ? SizedBox(child: Lottie.asset("assets/error_desktop_people.json"),)
+                  ? SizedBox(
+                      child: Lottie.asset("assets/error_desktop_people.json"),
+                    )
                   : Image.network(
                       "${Constants.baseImageUrl}${movie.backPoster}",
                       fit: BoxFit.cover,
@@ -152,9 +152,7 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  const SizedBox(
-                    width: 5.0,
-                  ),
+                  const SizedBox(width: 5.0),
                   RatingBar.builder(
                       itemSize: 14.0,
                       initialRating: (movie.rating / 2).toDouble(),
@@ -163,8 +161,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
                       allowHalfRating: true,
                       itemCount: 5,
                       itemPadding: const EdgeInsets.symmetric(horizontal: 2.0),
-                      itemBuilder: (context, _) => const Icon(EvaIcons.star,
-                          color: MyColors.secondColor),
+                      itemBuilder: (context, _) => const Icon(
+                            EvaIcons.star,
+                            color: MyColors.secondColor,
+                          ),
                       onRatingUpdate: (rating) {
                         print(rating);
                       })
@@ -173,11 +173,14 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             ),
             const Padding(
               padding: EdgeInsets.only(left: 10.0, top: 20.0),
-              child: Text("OVERVIEW",
-                  style: TextStyle(
-                      color: MyColors.titleColor,
-                      fontWeight: FontWeight.w500,
-                      fontSize: 12.0)),
+              child: Text(
+                "OVERVIEW",
+                style: TextStyle(
+                  color: MyColors.titleColor,
+                  fontWeight: FontWeight.w500,
+                  fontSize: 12.0,
+                ),
+              ),
             ),
             const SizedBox(height: 5.0),
             Padding(
@@ -185,7 +188,10 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
               child: Text(
                 movie.overview,
                 style: const TextStyle(
-                    color: Colors.white, fontSize: 12.0, height: 1.5),
+                  color: Colors.white,
+                  fontSize: 12.0,
+                  height: 1.5,
+                ),
               ),
             ),
             const SizedBox(height: 10.0),

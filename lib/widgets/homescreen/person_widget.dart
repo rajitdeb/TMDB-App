@@ -10,10 +10,10 @@ import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/utils/constants.dart';
 
 class PersonList extends StatefulWidget {
-  const PersonList({Key? key}) : super(key: key);
+  const PersonList({super.key});
 
   @override
-  _PersonListState createState() => _PersonListState();
+  State<PersonList> createState() => _PersonListState();
 }
 
 class _PersonListState extends State<PersonList> {
@@ -82,8 +82,7 @@ class _PersonListState extends State<PersonList> {
           children: [
             SizedBox(
                 height: 70.0,
-                child: Lottie.asset("assets/gradient_circular_loader.json")
-            )
+                child: Lottie.asset("assets/gradient_circular_loader.json"))
           ],
         ),
       ),
@@ -122,7 +121,8 @@ class _PersonListState extends State<PersonList> {
               return GestureDetector(
                 onTap: () {
                   print("Person Id: ${persons[index].id}");
-                  Get.to(() => const PersonDetailsScreen(), arguments: persons[index].id);
+                  Get.to(() => const PersonDetailsScreen(),
+                      arguments: persons[index].id);
                 },
                 child: Container(
                   width: 100.0,
@@ -153,29 +153,23 @@ class _PersonListState extends State<PersonList> {
                                   shape: BoxShape.circle,
                                   color: MyColors.secondColor,
                                   image: DecorationImage(
-                                      image: NetworkImage("${Constants.baseImageUrl_w200}${persons[index].profileImg}"),
-                                      fit: BoxFit.cover
-                                  )
-                              ),
+                                      image: NetworkImage(
+                                          "${Constants.baseImageUrl_w200}${persons[index].profileImg}"),
+                                      fit: BoxFit.cover)),
                             ),
-
                       const SizedBox(height: 10.0),
-
                       Text(
-                          persons[index].name,
+                        persons[index].name,
                         textAlign: TextAlign.center,
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
-                          height: 1.4,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 13.0
-                        ),
+                            height: 1.4,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 13.0),
                       ),
-
                       const SizedBox(height: 4.0),
-
                       Text(
                         "Trending for ${persons[index].known}",
                         textAlign: TextAlign.center,
@@ -184,8 +178,7 @@ class _PersonListState extends State<PersonList> {
                         style: const TextStyle(
                             color: MyColors.secondColor,
                             fontWeight: FontWeight.bold,
-                            fontSize: 11.0
-                        ),
+                            fontSize: 11.0),
                       ),
                     ],
                   ),

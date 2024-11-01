@@ -6,14 +6,13 @@ import 'package:tmdb/style/theme.dart';
 import 'home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  const SplashScreen({super.key});
 
   @override
-  _SplashScreenState createState() => _SplashScreenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -22,7 +21,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Container(
         width: MediaQuery.of(context).size.width,
@@ -31,7 +29,6 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-
             SizedBox(
               child: Column(
                 children: [
@@ -49,9 +46,9 @@ class _SplashScreenState extends State<SplashScreen> {
                       ),
                     ),
                   ),
-
-                  const SizedBox(height: 8.0,),
-
+                  const SizedBox(
+                    height: 8.0,
+                  ),
                   const Text(
                     "Everything about entertainment",
                     style: TextStyle(
@@ -61,12 +58,9 @@ class _SplashScreenState extends State<SplashScreen> {
                 ],
               ),
             ),
-
             SizedBox(
-              height: 150.0,
-              child: Lottie.asset("assets/cinema_news_ffbg.json")
-            )
-
+                height: 150.0,
+                child: Lottie.asset("assets/cinema_news_ffbg.json"))
           ],
         ),
       ),

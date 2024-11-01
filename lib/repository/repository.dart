@@ -5,7 +5,6 @@ import 'package:tmdb/model/genreresponse.dart';
 import 'package:tmdb/model/movie_detail_response.dart';
 import 'package:tmdb/model/movie_response.dart';
 import 'package:tmdb/model/movie_video_response.dart';
-import 'package:tmdb/model/person_detail.dart';
 import 'package:tmdb/model/person_detail_response.dart';
 import 'package:tmdb/model/personresponse.dart';
 import 'package:tmdb/model/review_response.dart';
@@ -30,15 +29,13 @@ class MovieRepository {
   // functions
 
   Future<MovieDetailResponse> getMovieDetails(int movieId) async {
-    var params = {
-      "api_key": Constants.apiKey,
-      "language": "en-US",
-      "page": 1
-    };
+    var params = {"api_key": Constants.apiKey, "language": "en-US", "page": 1};
 
     try {
-      Response response =
-      await _dio.get("$getMovieDetail/$movieId", queryParameters: params);
+      Response response = await _dio.get(
+        "${Constants.baseUrl}/movie/$movieId",
+        queryParameters: params,
+      );
       return MovieDetailResponse.fromJson(response.data);
     } catch (e) {
       print(e);
@@ -59,7 +56,7 @@ class MovieRepository {
 
     try {
       Response response =
-      await _dio.get(getTopRatedRMovies, queryParameters: params);
+          await _dio.get(getTopRatedRMovies, queryParameters: params);
       // print(response.data.toString());
       return MovieResponse.fromJson(response.data);
     } catch (e) {
@@ -81,7 +78,7 @@ class MovieRepository {
 
     try {
       Response response =
-      await _dio.get(getTopRatedRMovies, queryParameters: params);
+          await _dio.get(getTopRatedRMovies, queryParameters: params);
       // print(response.data.toString());
       return MovieResponse.fromJson(response.data);
     } catch (e) {
@@ -91,11 +88,7 @@ class MovieRepository {
   }
 
   Future<MovieResponse> getPopularMovies() async {
-    var params = {
-      "api_key": Constants.apiKey,
-      "language": "en-US",
-      "page": 1
-    };
+    var params = {"api_key": Constants.apiKey, "language": "en-US", "page": 1};
 
     try {
       Response response =
@@ -108,11 +101,7 @@ class MovieRepository {
   }
 
   Future<MovieResponse> getNowPlayingMovies() async {
-    var params = {
-      "api_key": Constants.apiKey,
-      "language": "en-US",
-      "page": 1
-    };
+    var params = {"api_key": Constants.apiKey, "language": "en-US", "page": 1};
 
     try {
       Response response =
@@ -123,26 +112,6 @@ class MovieRepository {
       return MovieResponse.withError(e.toString());
     }
   }
-
-  // Future<MovieResponse> getAMovieDetail(int movieId) async {
-  //
-  //   var getAMovieDetailUrl = "$getMovieDetail/$movieId";
-  //
-  //   var params = {
-  //     "api_key": Constants.apiKey,
-  //     "language": "en-US"
-  //   };
-  //
-  //   try {
-  //
-  //     Response response = await _dio.get(getAMovieDetailUrl, queryParameters: params);
-  //     return MovieResponse.fromJson(response.data);
-  //
-  //   } catch (e) {
-  //     print(e);
-  //     return MovieResponse.withError(e.toString());
-  //   }
-  // }
 
   Future<GenreResponse> getGenres() async {
     var params = {"api_key": Constants.apiKey, "language": "en-US"};
@@ -195,8 +164,10 @@ class MovieRepository {
     };
 
     try {
-      Response response =
-      await _dio.get("$getMovieDetail/$id/credits", queryParameters: params);
+      Response response = await _dio.get(
+        "${Constants.baseUrl}/movie/$id/credits",
+        queryParameters: params,
+      );
 
       return CastResponse.fromJson(response.data);
     } catch (e) {
@@ -213,12 +184,14 @@ class MovieRepository {
     };
 
     try {
-      Response response =
-      await _dio.get("$getMovieDetail/$id/credits", queryParameters: params);
+      Response response = await _dio.get(
+        "${Constants.baseUrl}/movie/$id/credits",
+        queryParameters: params,
+      );
 
       return CrewResponse.fromJson(response.data);
     } catch (e) {
-      print(e);
+      print("Crew Error: $e");
       return CrewResponse.withError(e.toString());
     }
   }
@@ -231,8 +204,10 @@ class MovieRepository {
     };
 
     try {
-      Response response =
-      await _dio.get("$getMovieDetail/$id/similar", queryParameters: params);
+      Response response = await _dio.get(
+        "${Constants.baseUrl}/movie/$id/similar",
+        queryParameters: params,
+      );
       return MovieResponse.fromJson(response.data);
     } catch (e) {
       print(e);
@@ -248,8 +223,10 @@ class MovieRepository {
     };
 
     try {
-      Response response =
-      await _dio.get("$getMovieDetail/$id/videos", queryParameters: params);
+      Response response = await _dio.get(
+        "${Constants.baseUrl}/movie/$id/videos",
+        queryParameters: params,
+      );
       return MovieVideoResponse.fromJson(response.data);
     } catch (e) {
       print(e);
@@ -265,8 +242,10 @@ class MovieRepository {
     };
 
     try {
-      Response response =
-      await _dio.get("$getMovieDetail/$id/reviews", queryParameters: params);
+      Response response = await _dio.get(
+        "${Constants.baseUrl}/movie/$id/reviews",
+        queryParameters: params,
+      );
 
       return MovieReviewResponse.fromJson(response.data);
     } catch (e) {
@@ -276,14 +255,11 @@ class MovieRepository {
   }
 
   Future<PersonDetailResponse> getPersonAllDetails(int id) async {
-    var params = {
-      "api_key": Constants.apiKey,
-      "language": "en-US"
-    };
+    var params = {"api_key": Constants.apiKey, "language": "en-US"};
 
     try {
       Response response =
-      await _dio.get("$getPersonDetails/$id", queryParameters: params);
+          await _dio.get("$getPersonDetails/$id", queryParameters: params);
 
       return PersonDetailResponse.fromJson(response.data);
     } catch (e) {
@@ -292,7 +268,7 @@ class MovieRepository {
     }
   }
 
-  Future<MovieResponse> searchAMovie(String searchQuery) async{
+  Future<MovieResponse> searchAMovie(String searchQuery) async {
     var params = {
       "api_key": Constants.apiKey,
       "language": "en-US",
@@ -301,8 +277,7 @@ class MovieRepository {
     };
 
     try {
-      Response response =
-          await _dio.get(searchMovie, queryParameters: params);
+      Response response = await _dio.get(searchMovie, queryParameters: params);
 
       return MovieResponse.fromJson(response.data);
     } catch (e) {
@@ -310,5 +285,4 @@ class MovieRepository {
       return MovieResponse.withError(e.toString());
     }
   }
-
 }

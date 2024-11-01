@@ -5,17 +5,16 @@ import 'package:tmdb/style/theme.dart';
 import 'package:tmdb/widgets/homescreen/genre_movies_widget.dart';
 
 class GenreTabs extends StatefulWidget {
-
   final List<Genre> genres;
 
-  const GenreTabs({Key? key, required this.genres}) : super(key: key);
+  const GenreTabs({super.key, required this.genres});
 
   @override
-  _GenreTabsState createState() => _GenreTabsState(genres);
+  State<GenreTabs> createState() => _GenreTabsState(genres);
 }
 
-class _GenreTabsState extends State<GenreTabs> with SingleTickerProviderStateMixin {
-
+class _GenreTabsState extends State<GenreTabs>
+    with SingleTickerProviderStateMixin {
   final List<Genre> genres;
   late final TabController _tabController;
 
@@ -26,7 +25,7 @@ class _GenreTabsState extends State<GenreTabs> with SingleTickerProviderStateMix
     super.initState();
     _tabController = TabController(vsync: this, length: genres.length);
     _tabController.addListener(() {
-      if(_tabController.indexIsChanging){
+      if (_tabController.indexIsChanging) {
         moviesByGenreBloc.drainStream();
       }
     });
@@ -46,7 +45,7 @@ class _GenreTabsState extends State<GenreTabs> with SingleTickerProviderStateMix
         length: genres.length,
         child: Scaffold(
           appBar: PreferredSize(
-            preferredSize: Size.fromHeight(50.0),
+            preferredSize: const Size.fromHeight(50.0),
             child: AppBar(
               backgroundColor: MyColors.mainColor,
               bottom: TabBar(
@@ -61,11 +60,9 @@ class _GenreTabsState extends State<GenreTabs> with SingleTickerProviderStateMix
                   return Container(
                     padding: const EdgeInsets.only(top: 10.0, bottom: 15.0),
                     child: Text(
-                        genre.name.toUpperCase(),
+                      genre.name.toUpperCase(),
                       style: const TextStyle(
-                        fontSize: 14.0,
-                        fontWeight: FontWeight.bold
-                      ),
+                          fontSize: 14.0, fontWeight: FontWeight.bold),
                     ),
                   );
                 }).toList(growable: true),

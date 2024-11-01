@@ -39,16 +39,25 @@ class SearchMovies extends SearchDelegate<Movie?> {
       hintColor: Colors.grey,
       // affects the initial 'Search' text
       textTheme: const TextTheme(
-          headline6: TextStyle(
-              // headline 6 affects the query text
-              color: Colors.white,
-              fontSize: 16.0,
-              fontWeight: FontWeight.bold)),
+        // headline6: TextStyle(
+        //   // headline 6 affects the query text
+        //   color: Colors.white,
+        //   fontSize: 16.0,
+        //   fontWeight: FontWeight.bold,
+        // ),
+        headlineLarge: TextStyle(
+          // headline 6 affects the query text
+          color: Colors.white,
+          fontSize: 40.0,
+          fontWeight: FontWeight.bold,
+        ),
+      ),
       textSelectionTheme: const TextSelectionThemeData(
-          cursorColor: Colors.white,
-          selectionColor: Colors.white,
-          selectionHandleColor:
-              Colors.white), // affects when the text in Search Bar is selected
+        cursorColor: Colors.white,
+        selectionColor: Colors.white,
+        selectionHandleColor:
+            Colors.white, // affects when the text in Search Bar is selected
+      ),
     );
   }
 

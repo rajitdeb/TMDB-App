@@ -5,7 +5,6 @@ import 'package:tmdb/model/movie_detail_response.dart';
 import 'package:tmdb/style/theme.dart';
 
 class MovieInfoWidget extends StatefulWidget {
-
   final int id;
 
   const MovieInfoWidget({Key? key, required this.id}) : super(key: key);
@@ -15,7 +14,6 @@ class MovieInfoWidget extends StatefulWidget {
 }
 
 class _MovieInfoWidgetState extends State<MovieInfoWidget> {
-
   final int id;
 
   _MovieInfoWidgetState(this.id);
@@ -36,7 +34,8 @@ class _MovieInfoWidgetState extends State<MovieInfoWidget> {
   Widget build(BuildContext context) {
     return StreamBuilder<MovieDetailResponse>(
       stream: getMovieDetailsBloc.subject.stream,
-      builder: (BuildContext context, AsyncSnapshot<MovieDetailResponse> snapshot) {
+      builder:
+          (BuildContext context, AsyncSnapshot<MovieDetailResponse> snapshot) {
         if (snapshot.hasData) {
           if (snapshot.data!.error != null && snapshot.data!.error!.isEmpty) {
             return _buildErrorWidget(snapshot.data!.error);
@@ -47,19 +46,14 @@ class _MovieInfoWidgetState extends State<MovieInfoWidget> {
         } else {
           return _buildLoadingWidget();
         }
-      },);
+      },
+    );
   }
 
   Widget _buildErrorWidget(String? error) {
     return Container(
-      width: MediaQuery
-          .of(context)
-          .size
-          .width,
-      height: MediaQuery
-          .of(context)
-          .size
-          .height,
+      width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height,
       child: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -89,12 +83,9 @@ class _MovieInfoWidgetState extends State<MovieInfoWidget> {
 
   Widget _buildMovieDetailsWidget(MovieDetailResponse? data) {
     MovieDetail? movieDetail = data?.movieDetails;
-    if(movieDetail == null) {
+    if (movieDetail == null) {
       return Container(
-        width: MediaQuery
-            .of(context)
-            .size
-            .width,
+        width: MediaQuery.of(context).size.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -123,22 +114,21 @@ class _MovieInfoWidgetState extends State<MovieInfoWidget> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                        "BUDGET",
+                      "BUDGET",
                       style: TextStyle(
-                        color: MyColors.titleColor,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12.0
-                      ),),
-
-                    SizedBox(height: 10.0,),
-
+                          color: MyColors.titleColor,
+                          fontWeight: FontWeight.w500,
+                          fontSize: 12.0),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Text(
                       "${movieDetail.budget.toString()}\$",
                       style: TextStyle(
-                        color: MyColors.secondColor,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 12.0
-                      ),
+                          color: MyColors.secondColor,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 12.0),
                     )
                   ],
                 ),
@@ -150,18 +140,17 @@ class _MovieInfoWidgetState extends State<MovieInfoWidget> {
                       style: TextStyle(
                           color: MyColors.titleColor,
                           fontWeight: FontWeight.w500,
-                          fontSize: 12.0
-                      ),),
-
-                    SizedBox(height: 10.0,),
-
+                          fontSize: 12.0),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Text(
                       "${movieDetail.runtime.toString()} min",
                       style: TextStyle(
                           color: MyColors.secondColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12.0
-                      ),
+                          fontSize: 12.0),
                     )
                   ],
                 ),
@@ -173,94 +162,89 @@ class _MovieInfoWidgetState extends State<MovieInfoWidget> {
                       style: TextStyle(
                           color: MyColors.titleColor,
                           fontWeight: FontWeight.w500,
-                          fontSize: 12.0
-                      ),),
-
-                    SizedBox(height: 10.0,),
-
+                          fontSize: 12.0),
+                    ),
+                    SizedBox(
+                      height: 10.0,
+                    ),
                     Text(
                       "${movieDetail.releaseDate.toString()}",
                       style: TextStyle(
                           color: MyColors.secondColor,
                           fontWeight: FontWeight.bold,
-                          fontSize: 12.0
-                      ),
+                          fontSize: 12.0),
                     ),
                   ],
                 )
               ],
             ),
           ),
-
-          SizedBox(height: 10.0,),
-
+          SizedBox(
+            height: 10.0,
+          ),
           Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "GENRES",
-                  style: TextStyle(
-                    color: MyColors.titleColor,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 12.0,
-                  ),
-                ),
-
-                SizedBox(height: 10.0,),
-
-                movieDetail.genres.isNotEmpty
-                ? Container(
-                  height: 38.0,
-                  padding: const EdgeInsets.only(right: 10.0, top: 10.0),
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: movieDetail.genres.length,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.only(right: 10.0),
-                          child: Container(
-                            padding: EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                              border: Border.all(width: 1.0, color: Colors.white),
-                            ),
-                            child: Text(
-                              movieDetail.genres[index].name,
-                              maxLines: 2,
-                              style: TextStyle(
-                                  height: 1.4,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 12.0
-                              ),
-                            ),
-                          ),
-                        );
-                      }
-                  ),
-                )
-                    : Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 100.0,
-                  child: Center(
-                    child: Text(
-                      "No genres found for this movie",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: MyColors.titleColor
-                      ),
+              padding: EdgeInsets.all(10.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "GENRES",
+                    style: TextStyle(
+                      color: MyColors.titleColor,
+                      fontWeight: FontWeight.w500,
+                      fontSize: 12.0,
                     ),
                   ),
-                )
-              ],
-            )
-          ),
-
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  movieDetail.genres.isNotEmpty
+                      ? Container(
+                          height: 38.0,
+                          padding:
+                              const EdgeInsets.only(right: 10.0, top: 10.0),
+                          child: ListView.builder(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: movieDetail.genres.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.only(right: 10.0),
+                                  child: Container(
+                                    padding: EdgeInsets.all(5.0),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(5.0)),
+                                      border: Border.all(
+                                          width: 1.0, color: Colors.white),
+                                    ),
+                                    child: Text(
+                                      movieDetail.genres[index].name,
+                                      maxLines: 2,
+                                      style: TextStyle(
+                                          height: 1.4,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold,
+                                          fontSize: 12.0),
+                                    ),
+                                  ),
+                                );
+                              }),
+                        )
+                      : Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 100.0,
+                          child: Center(
+                            child: Text(
+                              "No genres found for this movie",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(color: MyColors.titleColor),
+                            ),
+                          ),
+                        )
+                ],
+              )),
         ],
       );
     }
   }
-
 }
